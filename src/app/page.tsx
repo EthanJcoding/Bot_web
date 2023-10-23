@@ -5,6 +5,8 @@ export default function Home() {
         인권에 대한 무시와 경멸이 인류의 양심을 격분시키는 만행을 초래하였으며,
         인간이 언론과 신앙의 자유, 그리고 공포와
       </div>
+
+      <div>이 페이지는 랜딩페이지가 될 예정입니다.</div>
       <div>
         No one shall be subjected to arbitrary arrest, detention or exile.
         Everyone is entitled in full equality to a fair and public hearing by an

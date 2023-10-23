@@ -1,8 +1,11 @@
-function Page({ params }: { params: { gameId: string } }) {
-  console.log(params.gameId)
+import Card from '@/components/Card/Card'
+
+const Page = ({ params }: { params: { gameId: string; guildId: string } }) => {
+  const { guildId, gameId } = params
+
   return (
     <div>
-      <div>this is games page</div>
+      <Card guildId={guildId} gameId={gameId} />
     </div>
   )
 }
