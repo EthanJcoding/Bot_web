@@ -9,10 +9,12 @@ import {
 } from '../../ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../ui/tabs'
 import Upcoming from '../elements/Upcoming'
-import RecentSales from '../elements/recent-sales'
+import AcsOrder from '../elements/AcsOrder'
+import Link from 'next/link'
 
 interface ContentsForDashboardProps {
   name: string
+  guildId: string
   games: {
     [key: string]: {
       createdBy: string
@@ -29,15 +31,26 @@ interface ContentsForDashboardProps {
   }
 }
 
-const ContentsForDashboard = ({ name, games }: ContentsForDashboardProps) => {
-  const { firstGame, pastGamesCount, futureGamesCount, totalParticipants } =
-    usePreprocess(games)
+const ContentsForDashboard = ({
+  name,
+  games,
+  guildId,
+}: ContentsForDashboardProps) => {
+  const {
+    firstGame,
+    pastGamesCount,
+    futureGamesCount,
+    totalParticipants,
+    gameId,
+  } = usePreprocess(games)
 
   if (name && games) {
     return (
       <div className="flex-1 space-y-4 p-8 pt-6">
         <div className="flex items-center justify-between space-y-2">
-          <h2 className="text-3xl font-bold tracking-tight">{name}</h2>
+          <h2 className="text-3xl font-bold tracking-tight">
+            Welcome to {name} Dashboard 👋
+          </h2>
           <div />
         </div>
         <Tabs defaultValue="overview" className="space-y-4">
@@ -126,7 +139,7 @@ const ContentsForDashboard = ({ name, games }: ContentsForDashboardProps) => {
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">
-                    Active Now
+                    내전 달력
                   </CardTitle>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -152,7 +165,10 @@ const ContentsForDashboard = ({ name, games }: ContentsForDashboardProps) => {
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
               <Card className="col-span-4">
                 <CardHeader>
-                  <CardTitle>다가오는 내전</CardTitle>
+                  <div className="flex justify-between">
+                    <CardTitle>다가오는 내전</CardTitle>
+                    <Link href={`${guildId}/games/${gameId}`}>바로가기 📎</Link>
+                  </div>
                   <CardDescription>
                     {dayjs(firstGame.date).format(
                       'MM월DD일 HH:mm에 예정된 내전에 참여하는 인원이에요 🤗',
@@ -167,11 +183,12 @@ const ContentsForDashboard = ({ name, games }: ContentsForDashboardProps) => {
                 <CardHeader>
                   <CardTitle>내전 최강자</CardTitle>
                   <CardDescription>
-                    You made 265 sales this month.
+                    13번의 내전을 진행하며 하이앳님이 가장 높은 acs 지표를
+                    보여주셨어요!
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <RecentSales />
+                  <AcsOrder />
                 </CardContent>
               </Card>
             </div>
@@ -183,8 +200,7 @@ const ContentsForDashboard = ({ name, games }: ContentsForDashboardProps) => {
         </Tabs>
       </div>
     )
-  }
-  return null
+  } else null
 }
 
 export default ContentsForDashboard

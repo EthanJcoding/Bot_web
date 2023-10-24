@@ -1,5 +1,3 @@
-/* eslint-disable guard-for-in */
-/* eslint-disable no-restricted-syntax */
 function usePreprocess(games: {
   [key: string]: {
     createdBy: string
@@ -15,7 +13,6 @@ function usePreprocess(games: {
   }
 }) {
   const firstGame = Object.values(games)[0]
-
   const currentDate = new Date()
   const pastGamesCount = Object.values(games).filter(
     (game) => new Date(game.date) < currentDate,
@@ -46,6 +43,7 @@ function usePreprocess(games: {
     pastGamesCount,
     futureGamesCount,
     totalParticipants,
+    gameId: Object.values(games)[0].key,
   }
 }
 

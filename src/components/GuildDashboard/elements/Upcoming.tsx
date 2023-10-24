@@ -12,10 +12,10 @@ interface UpcomingProps {
 
 const Upcoming = ({ members }: UpcomingProps) => {
   return (
-    <div className="space-y-8">
+    <div className="flex flex-wrap">
       {members.map((member, idx) => {
         return (
-          <div key={idx} className="flex items-center">
+          <div key={idx} className="flex items-center w-1/2 mb-8">
             <Avatar className="h-9 w-9">
               <AvatarImage src={member.avatar} alt="Avatar" />
             </Avatar>

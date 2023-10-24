@@ -1,4 +1,4 @@
-import Dashboard from '@/components/Dashboard/Dashboard'
+import GuildDashboard from '@/components/GuildDashboard/GuildDashboard'
 import TanstackProvider from '@/utils/providers/TanstackProvider'
 
 const guildPage = async ({ params }: { params: { guildId: string } }) => {
@@ -6,7 +6,7 @@ const guildPage = async ({ params }: { params: { guildId: string } }) => {
     <TanstackProvider>
       <div className="flex-1">
         <div className="container relative">
-          <Dashboard guildId={params.guildId} />
+          <GuildDashboard guildId={params.guildId} />
         </div>
       </div>
     </TanstackProvider>

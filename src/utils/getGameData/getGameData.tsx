@@ -1,10 +1,10 @@
 import { get, goOffline, ref } from 'firebase/database'
 import { database } from '@/app/firebase'
 
-export default async function getGuildData(guildId: string) {
+const getGameData = async (guildId: string, gameId: string) => {
   try {
-    const guildRef = ref(database, `guilds/${guildId}`)
-    const snapshot = await get(guildRef)
+    const gameRef = ref(database, `guilds/${guildId}/games/${gameId}`)
+    const snapshot = await get(gameRef)
 
     if (snapshot.exists()) {
       return { props: snapshot.val() }
@@ -17,3 +17,5 @@ export default async function getGuildData(guildId: string) {
     return { props: { data: [], error: 'Failed to fetch data' } }
   }
 }
+
+export default getGameData

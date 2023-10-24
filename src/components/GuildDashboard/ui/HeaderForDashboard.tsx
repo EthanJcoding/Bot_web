@@ -23,9 +23,9 @@ const HeaderForDashboard = () => {
             </a>
           ))} */}
         </nav>
-        <div className="ml-auto flex items-center space-x-4">
+        {/* <div className="ml-auto flex items-center space-x-4">
           <div className="border">hi</div>
-        </div>
+        </div> */}
       </div>
     </div>
   )

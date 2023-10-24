@@ -1,6 +1,3 @@
-/* eslint-disable react/require-default-props */
-/* eslint-disable react/prop-types */
-
 'use client'
 
 import * as React from 'react'
