@@ -1,12 +1,21 @@
-import database from '@/app/firebase'
-import { get, ref } from 'firebase/database'
+/* eslint-disable no-console */
+import { get, goOffline, goOnline, ref } from 'firebase/database'
+import { database } from '@/app/firebase'
 
 export default async function getGuildData(guildId: string) {
-  const guildRef = ref(database, `guilds/${guildId}`)
-  const snapshot = await get(guildRef)
+  try {
+    goOnline(database)
+    const guildRef = ref(database, `guilds/${guildId}`)
+    const snapshot = await get(guildRef)
 
-  if (snapshot.exists()) {
-    return { props: snapshot.val() }
+    if (snapshot.exists()) {
+      return { props: snapshot.val() }
+    }
+    goOffline(database)
+    return { props: { data: [] } }
+  } catch (error) {
+    console.error('Error fetching data:', error)
+    goOffline(database)
+    return { props: { data: [], error: 'Failed to fetch data' } }
   }
-  return { props: { data: [] } }
 }

@@ -1,12 +1,25 @@
+import getGuildData from '@/utils/getGuildData/getGuildData'
+import ContentsForDashboard from './ui/ContentsForDashboard'
+import HeaderForDashboard from './ui/HeaderForDashboard'
+
 interface CardProps {
   guildId: string
 }
 
-const Dashboard = ({ guildId }: CardProps) => {
+const Dashboard = async ({ guildId }: CardProps) => {
+  const guildData = await getGuildData(guildId)
+
+  const { name, games } = guildData.props
+
   return (
-    <div>
-      <div>hi it is me and your guildId is {guildId}</div>
-    </div>
+    <section>
+      <div className="mt-16 overflow-hidden rounded-[0.5rem] border bg-background shadow">
+        <div className="flex-col flex">
+          <HeaderForDashboard />
+          <ContentsForDashboard name={name} games={games} />
+        </div>
+      </div>
+    </section>
   )
 }
 
