@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 
 interface UpcomingProps {

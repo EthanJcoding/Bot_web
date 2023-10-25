@@ -1,5 +1,6 @@
 import getGameData from '@/utils/getGameData/getGameData'
-
+import GameContentsForDashboard from './ui/GameContentsForDashboard'
+import HeaderForDashboard from './ui/HeaderForDashboard'
 interface GameDashboardProps {
   guildId: string
   gameId: string
@@ -8,12 +9,21 @@ interface GameDashboardProps {
 const GameDashboard = async ({ guildId, gameId }: GameDashboardProps) => {
   const gameData = await getGameData(guildId, gameId)
 
-  console.log(gameData.props)
+  const { createdBy, date, members } = gameData.props
 
   return (
-    <div>
-      <div>hi</div>
-    </div>
+    <section>
+      <div className="my-16 overflow-hidden rounded-[0.5rem] border bg-background shadow">
+        <div className="flex-col flex">
+          <HeaderForDashboard />
+          <GameContentsForDashboard
+            createdBy={createdBy}
+            date={date}
+            members={members}
+          />
+        </div>
+      </div>
+    </section>
   )
 }
 
