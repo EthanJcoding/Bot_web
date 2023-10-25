@@ -3,7 +3,7 @@ function usePreprocess(games: {
     createdBy: string
     date: string
     isActive: boolean
-    key: string
+    gameId: string
     members: Array<{
       gameUsername: string
       joinedAt: string
@@ -43,7 +43,7 @@ function usePreprocess(games: {
     pastGamesCount,
     futureGamesCount,
     totalParticipants,
-    gameId: Object.values(games)[0].key,
+    gameId: Object.values(games)[0].gameId,
   }
 }
 
