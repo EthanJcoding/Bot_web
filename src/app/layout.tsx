@@ -22,7 +22,9 @@ export default function RootLayout({
         <ThemeProvider defaultTheme="system" attribute="class">
           <div className="relative flex min-h-screen flex-col">
             <Header />
-            {children}
+            <div className="flex-1">
+              <div className="container relative">{children}</div>
+            </div>
           </div>
         </ThemeProvider>
       </body>

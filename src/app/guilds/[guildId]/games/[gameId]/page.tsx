@@ -3,14 +3,11 @@ import TanstackProvider from '@/utils/providers/TanstackProvider'
 
 const Page = ({ params }: { params: { gameId: string; guildId: string } }) => {
   const { guildId, gameId } = params
+  console.log(guildId, gameId)
 
   return (
     <TanstackProvider>
-      <div className="flex-1">
-        <div className="container relative">
-          <GameDashboard guildId={guildId} gameId={gameId} />
-        </div>
-      </div>
+      <GameDashboard guildId={guildId} gameId={gameId} />
     </TanstackProvider>
   )
 }
