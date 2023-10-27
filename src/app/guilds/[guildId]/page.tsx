@@ -1,10 +1,10 @@
-import Dashboard from '@/components/Dashboard/Dashboard'
+import GuildDashboard from '@/components/GuildDashboard/GuildDashboard'
 import TanstackProvider from '@/utils/providers/TanstackProvider'
 
-const guildPage = ({ params }: { params: { guildId: string } }) => {
+const guildPage = async ({ params }: { params: { guildId: string } }) => {
   return (
     <TanstackProvider>
-      <Dashboard guildId={params.guildId} />
+      <GuildDashboard guildId={params.guildId} />
     </TanstackProvider>
   )
 }
