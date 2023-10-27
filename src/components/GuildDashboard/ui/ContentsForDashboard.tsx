@@ -11,6 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../ui/tabs'
 import Upcoming from '../elements/Upcoming'
 import AcsOrder from '../elements/AcsOrder'
 import Link from 'next/link'
+import GameDayCalendar from '../elements/GameDayCalendar'
 
 interface ContentsForDashboardProps {
   name: string
@@ -42,14 +43,15 @@ const ContentsForDashboard = ({
     futureGamesCount,
     totalParticipants,
     gameId,
+    gamesSchedule,
   } = usePreprocess(games)
 
   if (name && games) {
     return (
       <div className="flex-1 space-y-4 p-8 pt-6">
-        <div className="flex items-center justify-between space-y-2">
-          <h2 className="text-3xl font-bold tracking-tight">
-            Welcome to {name} Dashboard 👋
+        <div className="flex items-center justify-between w-full">
+          <h2 className="text-3xl font-bold tracking-tight w-full">
+            {name} 채널의 대쉬보드입니다 👋
           </h2>
           <div />
         </div>

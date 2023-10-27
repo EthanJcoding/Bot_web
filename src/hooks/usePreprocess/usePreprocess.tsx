@@ -21,9 +21,11 @@ function usePreprocess(games: {
     (game) => new Date(game.date) >= currentDate,
   ).length
   const allParticipants = []
+  const gamesSchedule = []
 
   for (const gameId in games) {
     const game = games[gameId]
+    gamesSchedule.push({ date: game.date, href: game.gameId })
     if (game.members) {
       allParticipants.push(...game.members)
     }
@@ -44,6 +46,7 @@ function usePreprocess(games: {
     futureGamesCount,
     totalParticipants,
     gameId: Object.values(games)[0].gameId,
+    gamesSchedule,
   }
 }
 
