@@ -12,8 +12,8 @@ function usePreprocess(games: {
     }>
   }
 }) {
-  const firstGame = Object.values(games)[0]
   const currentDate = new Date()
+
   const pastGamesCount = Object.values(games).filter(
     (game) => new Date(game.date) < currentDate,
   ).length
@@ -23,8 +23,20 @@ function usePreprocess(games: {
   const allParticipants = []
   const gamesSchedule = []
 
+  let nearestGame = null
+  let nearestGameDate = null
+
   for (const gameId in games) {
     const game = games[gameId]
+    const gameDate = new Date(game.date)
+
+    if (
+      gameDate > currentDate &&
+      (!nearestGameDate || gameDate < nearestGameDate)
+    ) {
+      nearestGame = game
+      nearestGameDate = gameDate
+    }
     gamesSchedule.push({ date: game.date, href: game.gameId })
     if (game.members) {
       allParticipants.push(...game.members)
@@ -41,7 +53,7 @@ function usePreprocess(games: {
   const totalParticipants = uniqueParticipants.length
 
   return {
-    firstGame,
+    nearestGame,
     pastGamesCount,
     futureGamesCount,
     totalParticipants,
