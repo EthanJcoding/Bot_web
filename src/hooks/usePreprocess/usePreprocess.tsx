@@ -1,3 +1,16 @@
+export interface GameProps {
+  createdBy: string
+  date: string
+  gameId: string
+  isActive: boolean
+  members: Array<{
+    gameUsername: string
+    joinedAt: string
+    user: string
+    avatar: string
+  }>
+}
+
 function usePreprocess(games: {
   [key: string]: {
     createdBy: string
@@ -17,9 +30,9 @@ function usePreprocess(games: {
   const pastGamesCount = Object.values(games).filter(
     (game) => new Date(game.date) < currentDate,
   ).length
-  const futureGamesCount = Object.values(games).filter(
+  const futureGames = Object.values(games).filter(
     (game) => new Date(game.date) >= currentDate,
-  ).length
+  )
   const allParticipants = []
   const gamesSchedule = []
 
@@ -52,10 +65,22 @@ function usePreprocess(games: {
 
   const totalParticipants = uniqueParticipants.length
 
+  const gameList: GameProps[] = Object.values(games).sort(
+    (a: GameProps, b: GameProps) => {
+      const dateA = new Date(a.date)
+      const dateB = new Date(b.date)
+
+      if (dateA < dateB) return 1
+      if (dateA > dateB) return -1
+      return 0
+    },
+  )
+
   return {
+    gameList,
     nearestGame,
     pastGamesCount,
-    futureGamesCount,
+    futureGames,
     totalParticipants,
     gameId: Object.values(games)[0].gameId,
     gamesSchedule,
