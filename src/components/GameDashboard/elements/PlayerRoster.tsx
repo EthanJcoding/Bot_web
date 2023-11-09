@@ -28,6 +28,8 @@ interface Member {
 }
 
 const calculateAverageAcs = (team: Member[]) => {
+  if (team.length === 0) return 0
+
   const totalAcs = team.reduce((sum, member) => sum + member.acs, 0)
   return totalAcs / team.length
 }
@@ -53,24 +55,44 @@ const PlayerRoster = ({ members }: PlayerRosterProps) => {
 
     if (teamA.some((m) => m.gameUsername === member.gameUsername)) {
       setTeamA(teamA.filter((m) => m.gameUsername !== member.gameUsername))
-
-      setAvgAcsTeamA(calculateAverageAcs(teamA))
+      setAvgAcsTeamA(
+        calculateAverageAcs(
+          teamA.filter((m) => m.gameUsername !== member.gameUsername),
+        ),
+      )
     }
-    console.log(teamA)
 
     if (teamB.some((m) => m.gameUsername === member.gameUsername)) {
       setTeamB(teamB.filter((m) => m.gameUsername !== member.gameUsername))
-      setAvgAcsTeamB(calculateAverageAcs(teamB))
+      setAvgAcsTeamB(
+        calculateAverageAcs(
+          teamB.filter((m) => m.gameUsername !== member.gameUsername),
+        ),
+      )
     }
 
-    setAllMembers([...allMembers, member])
+    if (!allMembers.some((m) => m.gameUsername === member.gameUsername)) {
+      setAllMembers([...allMembers, member])
+    }
   }
 
   const handleOnDropA = (e: React.DragEvent) => {
     e.preventDefault()
     const member = JSON.parse(e.dataTransfer.getData('member'))
 
-    if (teamA.length === 0 || teamA.length < 5) {
+    if (
+      teamA.length === 0 ||
+      (teamA.length < 5 &&
+        teamA.some((m) => m.gameUsername !== member.gameUsername))
+    ) {
+      if (teamB.some((m) => m.gameUsername === member.gameUsername)) {
+        setTeamB(teamB.filter((m) => m.gameUsername !== member.gameUsername))
+        setAvgAcsTeamB(
+          calculateAverageAcs(
+            teamB.filter((m) => m.gameUsername !== member.gameUsername),
+          ),
+        )
+      }
       setTeamA([...teamA, member])
       setAllMembers(
         allMembers.filter((m) => m.gameUsername !== member.gameUsername),
@@ -85,7 +107,19 @@ const PlayerRoster = ({ members }: PlayerRosterProps) => {
     e.preventDefault()
     const member = JSON.parse(e.dataTransfer.getData('member'))
 
-    if (teamB.length === 0 || teamB.length < 5) {
+    if (
+      teamB.length === 0 ||
+      (teamB.length < 5 &&
+        teamB.some((m) => m.gameUsername !== member.gameUsername))
+    ) {
+      if (teamA.some((m) => m.gameUsername === member.gameUsername)) {
+        setTeamA(teamA.filter((m) => m.gameUsername !== member.gameUsername))
+        setAvgAcsTeamA(
+          calculateAverageAcs(
+            teamA.filter((m) => m.gameUsername !== member.gameUsername),
+          ),
+        )
+      }
       setTeamB([...teamB, member])
       setAllMembers(
         allMembers.filter((m) => m.gameUsername !== member.gameUsername),
@@ -114,18 +148,20 @@ const PlayerRoster = ({ members }: PlayerRosterProps) => {
           </CardHeader>
           <CardContent className="space-y-4">
             {allMembers.map((member, idx) => (
-              <div
-                className="space-y-1"
-                draggable
-                key={idx}
-                onDragStart={(e) => handleOnDrag(e, member)}
-              >
-                <p className="text-sm font-medium leading-none">
-                  {member.user}
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  {member.gameUsername}
-                </p>
+              <div key={idx} className="flex justify-between">
+                <div
+                  className="space-y-1"
+                  draggable
+                  onDragStart={(e) => handleOnDrag(e, member)}
+                >
+                  <p className="text-sm font-medium leading-none">
+                    {member.user}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {member.gameUsername}
+                  </p>
+                </div>
+                <p className="text-sm text-muted-foreground">{member.acs}</p>
               </div>
             ))}
           </CardContent>
@@ -137,18 +173,20 @@ const PlayerRoster = ({ members }: PlayerRosterProps) => {
           </CardHeader>
           <CardContent className="space-y-4">
             {teamA.map((memberA, idx) => (
-              <div
-                draggable
-                className="space-y-1"
-                key={idx}
-                onDragStart={(e) => handleOnDrag(e, memberA)}
-              >
-                <p className="text-sm font-medium leading-none">
-                  {memberA.user}
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  {memberA.gameUsername}
-                </p>
+              <div key={idx} className="flex justify-between">
+                <div
+                  draggable
+                  className="space-y-1"
+                  onDragStart={(e) => handleOnDrag(e, memberA)}
+                >
+                  <p className="text-sm font-medium leading-none">
+                    {memberA.user}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {memberA.gameUsername}
+                  </p>
+                </div>
+                <p className="text-sm text-muted-foreground">{memberA.acs}</p>
               </div>
             ))}
           </CardContent>
@@ -160,18 +198,20 @@ const PlayerRoster = ({ members }: PlayerRosterProps) => {
           </CardHeader>
           <CardContent className="space-y-4">
             {teamB.map((memberB, idx) => (
-              <div
-                draggable
-                className="space-y-1"
-                key={idx}
-                onDragStart={(e) => handleOnDrag(e, memberB)}
-              >
-                <p className="text-sm font-medium leading-none">
-                  {memberB.user}
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  {memberB.gameUsername}
-                </p>
+              <div key={idx} className="flex justify-between">
+                <div
+                  draggable
+                  className="space-y-1"
+                  onDragStart={(e) => handleOnDrag(e, memberB)}
+                >
+                  <p className="text-sm font-medium leading-none">
+                    {memberB.user}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {memberB.gameUsername}
+                  </p>
+                </div>
+                <p className="text-sm text-muted-foreground">{memberB.acs}</p>
               </div>
             ))}
           </CardContent>
