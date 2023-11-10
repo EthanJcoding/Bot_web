@@ -59,21 +59,23 @@ export function MapList() {
   const [open, setOpen] = useState<boolean>(false)
   const [label, setLabel] = useState<string>('')
 
+  // 발로란트 api 연결되면, 해당 맵에서 가장 승률이 좋은 플레이어를 들먹이는 것도 좋을듯
+
   return (
-    <>
+    <div className="flex flex-col justify-between space-y-2">
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="w-[200px] justify-between"
+            className="flex justify-between"
           >
             {label ? label : 'Select map...'}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[200px] p-0">
+        <PopoverContent className="max-w-[200px] p-0">
           <Command>
             <CommandInput placeholder="Search map..." />
             <CommandEmpty>No map found.</CommandEmpty>
@@ -100,9 +102,12 @@ export function MapList() {
           </Command>
         </PopoverContent>
       </Popover>
-      <Button onClick={() => setLabel(getRandomElement(maps)?.label ?? '')}>
+      <Button
+        className="w-full"
+        onClick={() => setLabel(getRandomElement(maps)?.label ?? '')}
+      >
         Random
       </Button>
-    </>
+    </div>
   )
 }

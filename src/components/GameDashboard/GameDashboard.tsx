@@ -15,7 +15,7 @@ const GameDashboard = async ({ guildId, gameId }: GameDashboardProps) => {
     <section>
       <div className="my-16 overflow-hidden rounded-[0.5rem] border bg-background shadow">
         <div className="flex-col flex">
-          <HeaderForDashboard />
+          <HeaderForDashboard guildId={guildId} />
           <GameContentsForDashboard
             createdBy={createdBy}
             date={date}

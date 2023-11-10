@@ -8,9 +8,11 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { useState } from 'react'
-import { GripHorizontal } from 'lucide-react'
+import { Grip } from 'lucide-react'
 import { MapList } from './MapList'
 import { Button } from '@/components/ui/button'
+import findOptimalTeams from '@/utils/findOptimalTeams/findOptimalTeams'
+import shuffleArray from '@/utils/shuffleTeam/shuffleTeam'
 
 interface PlayerRosterProps {
   members: {
@@ -137,6 +139,44 @@ const PlayerRoster = ({ members }: PlayerRosterProps) => {
     e.preventDefault()
   }
 
+  const onClickAcsOrder = () => {
+    if (members.length < 10) {
+      alert('아직 팀원이 부족해요 😅')
+    } else {
+      const { teamA, teamB, avgAcsTeamA, avgAcsTeamB } =
+        findOptimalTeams(members)
+      setTeamA(teamA)
+      setTeamB(teamB)
+      setAvgAcsTeamA(avgAcsTeamA)
+      setAvgAcsTeamB(avgAcsTeamB)
+      setAllMembers([])
+    }
+  }
+
+  const onClickRandomOrder = () => {
+    if (members.length < 10) {
+      alert('아직 팀원이 부족해요 😅')
+    } else {
+      const { teamA, teamB, avgAcsTeamA, avgAcsTeamB } = shuffleArray(members)
+
+      setTeamA(teamA)
+      setTeamB(teamB)
+      setAvgAcsTeamA(avgAcsTeamA)
+      setAvgAcsTeamB(avgAcsTeamB)
+      setAllMembers([])
+    }
+  }
+
+  const onClickReset = () => {
+    setTeamA([])
+    setTeamB([])
+    setAvgAcsTeamA(0)
+    setAvgAcsTeamB(0)
+    setAllMembers(members)
+  }
+
+  // 발로란트 api 연결되면 acs가 아닌 제일 선호하는 요원 초상화를 보여주기
+
   return (
     <div className="flex-1 space-y-4 p-8 pt-6 ">
       <div className="flex items-center justify-between w-full">
@@ -145,6 +185,42 @@ const PlayerRoster = ({ members }: PlayerRosterProps) => {
         <div />
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 grid-rows-2">
+          <Card>
+            <CardHeader>
+              <CardTitle>Map</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <MapList />
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Balance Manager</CardTitle>
+            </CardHeader>
+            <CardContent className="flex flex-col space-y-2 justify-center">
+              <div className="flex justify-between space-x-2">
+                <Button className="w-full" onClick={onClickAcsOrder}>
+                  ACS 정렬
+                </Button>
+                <Button className="w-full" onClick={onClickRandomOrder}>
+                  랜덤 정렬
+                </Button>
+              </div>
+              <div className="flex justify-between space-x-2">
+                <Button
+                  className="w-full"
+                  onClick={() => alert('아직 준비중이에요 🧑‍💻')}
+                >
+                  포지션
+                </Button>
+                <Button className="w-full" onClick={onClickReset}>
+                  리셋
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
         <Card onDrop={(e) => handleOnDropM(e)} onDragOver={handleDragOver}>
           <CardHeader>
             <CardTitle>Members</CardTitle>
@@ -152,13 +228,14 @@ const PlayerRoster = ({ members }: PlayerRosterProps) => {
           </CardHeader>
           <CardContent className="space-y-4">
             {allMembers.map((member, idx) => (
-              <div key={idx} className="flex justify-between ">
-                <div
-                  className="flex"
-                  draggable
-                  onDragStart={(e) => handleOnDrag(e, member)}
-                >
-                  <GripHorizontal className="h-4 w-4 text-muted-foreground mr-2" />
+              <div
+                key={idx}
+                className="flex justify-between"
+                draggable
+                onDragStart={(e) => handleOnDrag(e, member)}
+              >
+                <div className="flex">
+                  <Grip className="h-4 w-4 text-muted-foreground mr-2" />
                   <div>
                     <p className="text-sm font-medium leading-none">
                       {member.user}
@@ -176,17 +253,20 @@ const PlayerRoster = ({ members }: PlayerRosterProps) => {
         <Card onDrop={(e) => handleOnDropA(e)} onDragOver={handleDragOver}>
           <CardHeader>
             <CardTitle>Team A</CardTitle>
-            <CardDescription>평균 acs {avgAcsTeamA}</CardDescription>
+            <CardDescription>
+              평균 acs {Math.round(avgAcsTeamA)}
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             {teamA.map((memberA, idx) => (
-              <div key={idx} className="flex justify-between ">
-                <div
-                  className="flex"
-                  draggable
-                  onDragStart={(e) => handleOnDrag(e, memberA)}
-                >
-                  <GripHorizontal className="h-4 w-4 text-muted-foreground mr-2" />
+              <div
+                key={idx}
+                className="flex justify-between"
+                draggable
+                onDragStart={(e) => handleOnDrag(e, memberA)}
+              >
+                <div className="flex">
+                  <Grip className="h-4 w-4 text-muted-foreground mr-2" />
                   <div>
                     <p className="text-sm font-medium leading-none">
                       {memberA.user}
@@ -204,17 +284,20 @@ const PlayerRoster = ({ members }: PlayerRosterProps) => {
         <Card onDrop={(e) => handleOnDropB(e)} onDragOver={handleDragOver}>
           <CardHeader>
             <CardTitle>Team B</CardTitle>
-            <CardDescription>평균 acs {avgAcsTeamB}</CardDescription>
+            <CardDescription>
+              평균 acs {Math.round(avgAcsTeamB)}
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             {teamB.map((memberB, idx) => (
-              <div key={idx} className="flex justify-between ">
-                <div
-                  className="flex"
-                  draggable
-                  onDragStart={(e) => handleOnDrag(e, memberB)}
-                >
-                  <GripHorizontal className="h-4 w-4 text-muted-foreground mr-2" />
+              <div
+                key={idx}
+                className="flex justify-between"
+                draggable
+                onDragStart={(e) => handleOnDrag(e, memberB)}
+              >
+                <div className="flex">
+                  <Grip className="h-4 w-4 text-muted-foreground mr-2" />
                   <div>
                     <p className="text-sm font-medium leading-none">
                       {memberB.user}
@@ -229,26 +312,6 @@ const PlayerRoster = ({ members }: PlayerRosterProps) => {
             ))}
           </CardContent>
         </Card>
-        <div className="grid gap-4 grid-rows-2">
-          <Card>
-            <CardHeader>
-              <CardTitle>Setting</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <MapList />
-            </CardContent>
-          </Card>
-          <div>
-            <CardContent className="flex flex-col space-y-2 justify-center">
-              <Button className="mt-2" variant="secondary">
-                ACS order
-              </Button>
-              <Button>Random</Button>
-              <Button>hi</Button>
-              <Button>heelo</Button>
-            </CardContent>
-          </div>
-        </div>
       </div>
     </div>
   )
