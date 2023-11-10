@@ -8,6 +8,9 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { useState } from 'react'
+import { GripHorizontal } from 'lucide-react'
+import { MapList } from './MapList'
+import { Button } from '@/components/ui/button'
 
 interface PlayerRosterProps {
   members: {
@@ -138,6 +141,7 @@ const PlayerRoster = ({ members }: PlayerRosterProps) => {
     <div className="flex-1 space-y-4 p-8 pt-6 ">
       <div className="flex items-center justify-between w-full">
         <h2 className="text-3xl font-bold tracking-tight w-full">Round 1</h2>
+        <Button>저장하기</Button>
         <div />
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -148,18 +152,21 @@ const PlayerRoster = ({ members }: PlayerRosterProps) => {
           </CardHeader>
           <CardContent className="space-y-4">
             {allMembers.map((member, idx) => (
-              <div key={idx} className="flex justify-between">
+              <div key={idx} className="flex justify-between ">
                 <div
-                  className="space-y-1"
+                  className="flex"
                   draggable
                   onDragStart={(e) => handleOnDrag(e, member)}
                 >
-                  <p className="text-sm font-medium leading-none">
-                    {member.user}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    {member.gameUsername}
-                  </p>
+                  <GripHorizontal className="h-4 w-4 text-muted-foreground mr-2" />
+                  <div>
+                    <p className="text-sm font-medium leading-none">
+                      {member.user}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      {member.gameUsername}
+                    </p>
+                  </div>
                 </div>
                 <p className="text-sm text-muted-foreground">{member.acs}</p>
               </div>
@@ -173,18 +180,21 @@ const PlayerRoster = ({ members }: PlayerRosterProps) => {
           </CardHeader>
           <CardContent className="space-y-4">
             {teamA.map((memberA, idx) => (
-              <div key={idx} className="flex justify-between">
+              <div key={idx} className="flex justify-between ">
                 <div
+                  className="flex"
                   draggable
-                  className="space-y-1"
                   onDragStart={(e) => handleOnDrag(e, memberA)}
                 >
-                  <p className="text-sm font-medium leading-none">
-                    {memberA.user}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    {memberA.gameUsername}
-                  </p>
+                  <GripHorizontal className="h-4 w-4 text-muted-foreground mr-2" />
+                  <div>
+                    <p className="text-sm font-medium leading-none">
+                      {memberA.user}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      {memberA.gameUsername}
+                    </p>
+                  </div>
                 </div>
                 <p className="text-sm text-muted-foreground">{memberA.acs}</p>
               </div>
@@ -198,24 +208,47 @@ const PlayerRoster = ({ members }: PlayerRosterProps) => {
           </CardHeader>
           <CardContent className="space-y-4">
             {teamB.map((memberB, idx) => (
-              <div key={idx} className="flex justify-between">
+              <div key={idx} className="flex justify-between ">
                 <div
+                  className="flex"
                   draggable
-                  className="space-y-1"
                   onDragStart={(e) => handleOnDrag(e, memberB)}
                 >
-                  <p className="text-sm font-medium leading-none">
-                    {memberB.user}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    {memberB.gameUsername}
-                  </p>
+                  <GripHorizontal className="h-4 w-4 text-muted-foreground mr-2" />
+                  <div>
+                    <p className="text-sm font-medium leading-none">
+                      {memberB.user}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      {memberB.gameUsername}
+                    </p>
+                  </div>
                 </div>
                 <p className="text-sm text-muted-foreground">{memberB.acs}</p>
               </div>
             ))}
           </CardContent>
         </Card>
+        <div className="grid gap-4 grid-rows-2">
+          <Card>
+            <CardHeader>
+              <CardTitle>Setting</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <MapList />
+            </CardContent>
+          </Card>
+          <div>
+            <CardContent className="flex flex-col space-y-2 justify-center">
+              <Button className="mt-2" variant="secondary">
+                ACS order
+              </Button>
+              <Button>Random</Button>
+              <Button>hi</Button>
+              <Button>heelo</Button>
+            </CardContent>
+          </div>
+        </div>
       </div>
     </div>
   )
