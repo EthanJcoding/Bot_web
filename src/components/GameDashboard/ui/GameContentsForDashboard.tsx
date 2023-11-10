@@ -1,13 +1,7 @@
-import ListOfMembers from '../elements/ListOfMembers'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import dayjs from 'dayjs'
-import BalanceManager from '../elements/BalanceManager'
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
+import BalanceManagerCard from '../elements/BalanceManagerCard'
+import ListOfMembersCard from '../elements/ListOfMembersCard'
+import PlayerRoster from '../elements/PlayerRoster'
 
 interface GameContentsForDashBoardProps {
   createdBy: string
@@ -38,24 +32,25 @@ const GameContentsForDashboard = ({
         </h2>
         <div />
       </div>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-        <Card className="col-span-3">
-          <CardHeader>
-            <CardTitle>참여 집계된 인원</CardTitle>
-            <CardDescription>
-              {dayjs(date).format(
-                'MM월DD일 HH:mm에 예정된 내전에 참여하는 인원이에요 🤗',
-              )}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ListOfMembers members={members} />
-          </CardContent>
-        </Card>
-        <div className="grid col-span-4 grid-rows-3 gap-4">
-          <BalanceManager members={members} />
-        </div>
-      </div>
+      <Tabs defaultValue="main" className="space-y-4">
+        <TabsList>
+          <TabsTrigger value="main">내전</TabsTrigger>
+          <TabsTrigger value="setting">내전 세팅</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="main" className="space-y-4">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+            <ListOfMembersCard members={members} date={date} />
+            <div className="grid col-span-4 grid-rows-3 gap-4">
+              <BalanceManagerCard members={members} />
+            </div>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="setting" className="space-y-4 ">
+          <PlayerRoster members={members} />
+        </TabsContent>
+      </Tabs>
     </div>
   )
 }

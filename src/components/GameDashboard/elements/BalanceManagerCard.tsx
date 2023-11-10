@@ -31,7 +31,7 @@ interface PlayersProps {
   acs: number
 }
 
-const BalanceManager = ({ members }: BalanceManagerProps) => {
+const BalanceManagerCard = ({ members }: BalanceManagerProps) => {
   const [options, setOptions] = useState<{
     teamA: PlayersProps[]
     teamB: PlayersProps[]
@@ -45,15 +45,6 @@ const BalanceManager = ({ members }: BalanceManagerProps) => {
     avgAcsTeamB: 0,
     description: 'acs를 기반으로 자동으로 팀을 짜봤어요 🤔',
   })
-
-  useEffect(() => {
-    updateTeams('acs 기준 정렬')
-  }, [members])
-
-  const handleSortingOptionChange = (selectedOption: string) => {
-    updateTeams(selectedOption)
-  }
-
   const updateTeams = (selectedOption: string) => {
     const updatedOptions = { ...options }
 
@@ -74,6 +65,13 @@ const BalanceManager = ({ members }: BalanceManagerProps) => {
     }
 
     setOptions(updatedOptions)
+  }
+  useEffect(() => {
+    updateTeams('acs 기준 정렬')
+  }, [members])
+
+  const handleSortingOptionChange = (selectedOption: string) => {
+    updateTeams(selectedOption)
   }
 
   const { teamA, teamB, avgAcsTeamA, avgAcsTeamB, description } = options
@@ -140,4 +138,4 @@ const BalanceManager = ({ members }: BalanceManagerProps) => {
   )
 }
 
-export default memo(BalanceManager)
+export default memo(BalanceManagerCard)
