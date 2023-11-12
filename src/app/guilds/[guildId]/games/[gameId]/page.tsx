@@ -1,9 +1,13 @@
-function Page({ params }: { params: { gameId: string } }) {
-  console.log(params.gameId)
+import GameDashboard from '@/components/GameDashboard/GameDashboard'
+import TanstackProvider from '@/utils/providers/TanstackProvider'
+
+const Page = ({ params }: { params: { gameId: string; guildId: string } }) => {
+  const { guildId, gameId } = params
+
   return (
-    <div>
-      <div>this is games page</div>
-    </div>
+    <TanstackProvider>
+      <GameDashboard guildId={guildId} gameId={gameId} />
+    </TanstackProvider>
   )
 }
 

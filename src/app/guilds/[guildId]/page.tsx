@@ -1,10 +1,14 @@
-function Page({ params }: { params: { guildId: string } }) {
-  console.log(params.guildId)
+import GuildDashboard from '@/components/GuildDashboard/GuildDashboard'
+import TanstackProvider from '@/utils/providers/TanstackProvider'
+
+const guildPage = async ({ params }: { params: { guildId: string } }) => {
+  const { guildId } = params
+
   return (
-    <div>
-      <div>this is guilds page</div>
-    </div>
+    <TanstackProvider>
+      <GuildDashboard guildId={guildId} />
+    </TanstackProvider>
   )
 }
 
-export default Page
+export default guildPage
