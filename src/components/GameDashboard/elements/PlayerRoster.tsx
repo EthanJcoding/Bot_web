@@ -185,42 +185,6 @@ const PlayerRoster = ({ members }: PlayerRosterProps) => {
         <div />
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <div className="grid gap-4 grid-rows-2">
-          <Card>
-            <CardHeader>
-              <CardTitle>Map</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <MapList />
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>Balance Manager</CardTitle>
-            </CardHeader>
-            <CardContent className="flex flex-col space-y-2 justify-center">
-              <div className="flex justify-between space-x-2">
-                <Button className="w-full" onClick={onClickAcsOrder}>
-                  ACS 정렬
-                </Button>
-                <Button className="w-full" onClick={onClickRandomOrder}>
-                  랜덤 정렬
-                </Button>
-              </div>
-              <div className="flex justify-between space-x-2">
-                <Button
-                  className="w-full"
-                  onClick={() => alert('아직 준비중이에요 🧑‍💻')}
-                >
-                  포지션
-                </Button>
-                <Button className="w-full" onClick={onClickReset}>
-                  리셋
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
         <Card onDrop={(e) => handleOnDropM(e)} onDragOver={handleDragOver}>
           <CardHeader>
             <CardTitle>Members</CardTitle>
@@ -312,6 +276,42 @@ const PlayerRoster = ({ members }: PlayerRosterProps) => {
             ))}
           </CardContent>
         </Card>
+        <div className="grid gap-4 grid-rows-2">
+          <Card>
+            <CardHeader>
+              <CardTitle>Map</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <MapList />
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Balance Manager</CardTitle>
+            </CardHeader>
+            <CardContent className="flex flex-col space-y-2 justify-center">
+              <div className="flex justify-between space-x-2">
+                <Button className="w-full" onClick={onClickAcsOrder}>
+                  ACS 정렬
+                </Button>
+                <Button className="w-full" onClick={onClickRandomOrder}>
+                  랜덤 정렬
+                </Button>
+              </div>
+              <div className="flex justify-between space-x-2">
+                <Button
+                  className="w-full"
+                  onClick={() => alert('아직 준비중이에요 🧑‍💻')}
+                >
+                  포지션
+                </Button>
+                <Button className="w-full" onClick={onClickReset}>
+                  리셋
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   )

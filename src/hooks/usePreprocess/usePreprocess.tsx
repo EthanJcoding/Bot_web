@@ -30,9 +30,11 @@ function usePreprocess(games: {
   const pastGamesCount = Object.values(games).filter(
     (game) => new Date(game.date) < currentDate,
   ).length
-  const futureGames = Object.values(games).filter(
-    (game) => new Date(game.date) >= currentDate,
-  )
+
+  const futureGames = Object.values(games)
+    .filter((game) => new Date(game.date) >= currentDate)
+    .sort((a, b) => +new Date(a.date) - +new Date(b.date))
+
   const allParticipants = []
   const gamesSchedule = []
 

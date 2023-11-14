@@ -68,7 +68,7 @@ const BalanceManagerCard = ({ members }: BalanceManagerProps) => {
   }
   useEffect(() => {
     updateTeams('acs 기준 정렬')
-  }, [members])
+  }, [])
 
   const handleSortingOptionChange = (selectedOption: string) => {
     updateTeams(selectedOption)
