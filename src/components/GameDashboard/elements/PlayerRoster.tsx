@@ -45,9 +45,14 @@ const PlayerRoster = ({ members }: PlayerRosterProps) => {
   const [teamB, setTeamB] = useState<Member[]>([])
   const [avgAcsTeamA, setAvgAcsTeamA] = useState(0)
   const [avgAcsTeamB, setAvgAcsTeamB] = useState(0)
+  const [rounds, setRounds] = useState<
+    Array<{ teamA: Member[]; teamB: Member[] }>
+  >([])
+  const [currentRound, setCurrentRound] = useState(1)
 
   const handleOnDrag = (e: React.DragEvent, member: Member) => {
     const memberJSON = JSON.stringify(member)
+    console.log(memberJSON)
     if (memberJSON) {
       e.dataTransfer.setData('member', memberJSON)
     }
@@ -176,11 +181,31 @@ const PlayerRoster = ({ members }: PlayerRosterProps) => {
   }
 
   // 발로란트 api 연결되면 acs가 아닌 제일 선호하는 요원 초상화를 보여주기
+  const Bo5Tabs = () => {
+    return (
+      <div className="flex space-x-4 w-full">
+        {Array.from({ length: 5 }, (_, index) => (
+          <h2
+            role="button"
+            key={index}
+            className={`font-bold tracking-tight  ${
+              currentRound === index + 1
+                ? 'text-xl'
+                : 'p-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground rounded-2xl'
+            }`}
+            onClick={() => setCurrentRound(index + 1)}
+          >
+            Round {index + 1}
+          </h2>
+        ))}
+      </div>
+    )
+  }
 
   return (
     <div className="flex-1 space-y-4 p-8 pt-6 ">
       <div className="flex items-center justify-between w-full">
-        <h2 className="text-3xl font-bold tracking-tight w-full">Round 1</h2>
+        <Bo5Tabs />
         <Button>저장하기</Button>
         <div />
       </div>
