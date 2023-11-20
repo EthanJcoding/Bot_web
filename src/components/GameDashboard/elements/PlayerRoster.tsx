@@ -13,6 +13,16 @@ import { MapList } from './MapList'
 import { Button } from '@/components/ui/button'
 import findOptimalTeams from '@/utils/findOptimalTeams/findOptimalTeams'
 import shuffleArray from '@/utils/shuffleTeam/shuffleTeam'
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+} from '@/components/ui/dropdown-menu'
+import { CaretSortIcon } from '@radix-ui/react-icons'
 
 interface PlayerRosterProps {
   members: {
@@ -45,9 +55,6 @@ const PlayerRoster = ({ members }: PlayerRosterProps) => {
   const [teamB, setTeamB] = useState<Member[]>([])
   const [avgAcsTeamA, setAvgAcsTeamA] = useState(0)
   const [avgAcsTeamB, setAvgAcsTeamB] = useState(0)
-  const [rounds, setRounds] = useState<
-    Array<{ teamA: Member[]; teamB: Member[] }>
-  >([])
   const [currentRound, setCurrentRound] = useState(1)
 
   const handleOnDrag = (e: React.DragEvent, member: Member) => {
@@ -183,31 +190,36 @@ const PlayerRoster = ({ members }: PlayerRosterProps) => {
   // 발로란트 api 연결되면 acs가 아닌 제일 선호하는 요원 초상화를 보여주기
   const Bo5Tabs = () => {
     return (
-      <div className="flex space-x-4 w-full">
-        {Array.from({ length: 5 }, (_, index) => (
-          <h2
-            role="button"
-            key={index}
-            className={`font-bold tracking-tight  ${
-              currentRound === index + 1
-                ? 'text-xl'
-                : 'p-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground rounded-2xl'
-            }`}
-            onClick={() => setCurrentRound(index + 1)}
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="outline" className={'w-[132px] justify-between'}>
+            Round {currentRound}
+            <CaretSortIcon className="ml-auto h-4 w-4 shrink-0 opacity-50" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-full">
+          <DropdownMenuLabel>설정할 라운드를 골라주세요</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuRadioGroup
+            value={currentRound.toString()}
+            onValueChange={(value: string) => setCurrentRound(Number(value))}
           >
-            Round {index + 1}
-          </h2>
-        ))}
-      </div>
+            {Array.from({ length: 5 }, (_, index) => (
+              <DropdownMenuRadioItem key={index} value={(index + 1).toString()}>
+                Round {index + 1}
+              </DropdownMenuRadioItem>
+            ))}
+          </DropdownMenuRadioGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
     )
   }
 
   return (
-    <div className="flex-1 space-y-4 p-8 pt-6 ">
-      <div className="flex items-center justify-between w-full">
+    <div>
+      <div className="flex items-center justify-between w-full mb-4">
         <Bo5Tabs />
         <Button>저장하기</Button>
-        <div />
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card onDrop={(e) => handleOnDropM(e)} onDragOver={handleDragOver}>
