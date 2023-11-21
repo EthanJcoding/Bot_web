@@ -2,28 +2,21 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import BalanceManagerCard from '../elements/BalanceManagerCard'
 import ListOfMembersCard from '../elements/ListOfMembersCard'
 import PlayerRoster from '../elements/PlayerRoster'
+import getGameData from '@/firebase/getGameData/getGameData'
 
 interface GameContentsForDashBoardProps {
-  createdBy: string
-  date: string
-  isActive?: boolean
-  key?: string
-  members: Member[]
+  guildId: string
+  gameId: string
 }
 
-interface Member {
-  avatar: string
-  gameUsername: string
-  joinedAt: string
-  user: string
-  acs: number
-}
-
-const GameContentsForDashboard = ({
-  createdBy,
-  date,
-  members,
+const GameContentsForDashboard = async ({
+  guildId,
+  gameId,
 }: GameContentsForDashBoardProps) => {
+  const gameData = await getGameData(guildId, gameId)
+
+  const { createdBy, date, members } = gameData.props
+
   return (
     <div className="flex-1 space-y-4 p-8 pt-6">
       <div className="flex items-center justify-between space-y-2">

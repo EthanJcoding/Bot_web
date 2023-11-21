@@ -1,7 +1,7 @@
-import getGuildData from '@/utils/getGuildData/getGuildData'
+import getGuildData from '@/firebase/getGuildData/getGuildData'
 import ContentsForDashboard from './ui/ContentsForDashboard'
 import HeaderForDashboard from './ui/HeaderForDashboard'
-import { guildData } from '@/utils/getGuildData/getGuildData'
+import { guildData } from '@/firebase/getGuildData/getGuildData'
 interface CardProps {
   guildId: string
 }

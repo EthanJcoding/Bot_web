@@ -1,5 +1,5 @@
-import { get, goOffline, ref } from 'firebase/database'
-import { database } from '@/app/firebase'
+import { get, ref } from 'firebase/database'
+import { database } from '@/firebase/config'
 
 const getGameData = async (guildId: string, gameId: string) => {
   try {
@@ -9,11 +9,11 @@ const getGameData = async (guildId: string, gameId: string) => {
     if (snapshot.exists()) {
       return { props: snapshot.val() }
     }
-    goOffline(database)
+
     return { props: { data: [] } }
   } catch (error) {
     console.error('Error fetching data:', error)
-    goOffline(database)
+
     return { props: { data: [], error: 'Failed to fetch data' } }
   }
 }

@@ -1,13 +1,13 @@
 import GameDashboard from '@/components/GameDashboard/GameDashboard'
-import TanstackProvider from '@/utils/providers/TanstackProvider'
+import { RecoilRoot } from 'recoil'
 
 const Page = ({ params }: { params: { gameId: string; guildId: string } }) => {
   const { guildId, gameId } = params
 
   return (
-    <TanstackProvider>
+    <RecoilRoot>
       <GameDashboard guildId={guildId} gameId={gameId} />
-    </TanstackProvider>
+    </RecoilRoot>
   )
 }
 
