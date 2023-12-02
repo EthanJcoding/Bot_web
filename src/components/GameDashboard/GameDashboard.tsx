@@ -1,5 +1,6 @@
 import GameContentsForDashboard from './ui/GameContentsForDashboard'
 import HeaderForDashboard from './ui/HeaderForDashboard'
+
 interface GameDashboardProps {
   guildId: string
   gameId: string

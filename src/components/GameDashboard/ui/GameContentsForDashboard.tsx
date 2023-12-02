@@ -1,7 +1,7 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import BalanceManagerCard from '../elements/BalanceManagerCard'
 import ListOfMembersCard from '../elements/ListOfMembersCard'
-import PlayerRoster from '../elements/PlayerRoster'
+import PlayerRoasterInRoot from './PlayerRoster'
 import getGameData from '@/firebase/getGameData/getGameData'
 
 interface GameContentsForDashBoardProps {
@@ -41,7 +41,11 @@ const GameContentsForDashboard = async ({
         </TabsContent>
 
         <TabsContent value="setting" className="space-y-4 ">
-          <PlayerRoster members={members} />
+          <PlayerRoasterInRoot
+            members={members}
+            guildId={guildId}
+            gameId={gameId}
+          />
         </TabsContent>
       </Tabs>
     </div>

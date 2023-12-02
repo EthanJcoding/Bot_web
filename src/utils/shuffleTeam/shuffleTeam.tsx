@@ -9,21 +9,26 @@ interface PlayersProps {
 
 const shuffleArray = (players: PlayersProps[]) => {
   const shuffledPlayers = [...players]
-  for (let i = players.length - 1; i > 0; i--) {
+
+  for (let i = shuffledPlayers.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1))
-    ;[players[i], players[j]] = [players[j], players[i]]
+    ;[shuffledPlayers[i], shuffledPlayers[j]] = [
+      shuffledPlayers[j],
+      shuffledPlayers[i],
+    ]
   }
+
   const middleIndex = Math.ceil(shuffledPlayers.length / 2)
-  const teamA = shuffledPlayers.slice(0, middleIndex)
-  const teamB = shuffledPlayers.slice(middleIndex)
-  const avgAcsTeamA = calculateAcsAverage(teamA)
-  const avgAcsTeamB = calculateAcsAverage(teamB)
-  return {
-    teamA,
-    teamB,
-    avgAcsTeamA,
-    avgAcsTeamB,
-  }
+  const [teamA, teamB] = [
+    shuffledPlayers.slice(0, middleIndex),
+    shuffledPlayers.slice(middleIndex),
+  ]
+  const [avgAcsTeamA, avgAcsTeamB] = [
+    calculateAcsAverage(teamA),
+    calculateAcsAverage(teamB),
+  ]
+
+  return { teamA, teamB, avgAcsTeamA, avgAcsTeamB }
 }
 
 function calculateAcsAverage(team: PlayersProps[]) {
@@ -33,4 +38,4 @@ function calculateAcsAverage(team: PlayersProps[]) {
   return totalAcs / team.length
 }
 
-export default shuffleArray
+export { shuffleArray, calculateAcsAverage }
