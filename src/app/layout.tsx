@@ -20,12 +20,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${noto.className}`}>
         <ThemeProvider defaultTheme="system" attribute="class">
-          <div className="relative flex min-h-screen flex-col">
+          <main className="relative flex min-h-screen flex-col">
             <Header />
             <div className="flex-1">
               <div className="container relative">{children}</div>
             </div>
-          </div>
+          </main>
         </ThemeProvider>
       </body>
     </html>
