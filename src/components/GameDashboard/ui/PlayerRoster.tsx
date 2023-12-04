@@ -9,7 +9,12 @@ import Bo5DropDown from '../elements/Bo5DropDown'
 import DragDropColumns from '../elements/DragDropColumns'
 import { shuffleArray, findOptimalTeams } from '@/utils'
 import { dragDropMemberState } from '@/recoil'
+import { useToast } from '@/components/ui/use-toast'
 import saveTeamData from '@/firebase/saveTeamData/saveTeamData'
+import { Toaster } from '@/components/ui/toaster'
+import { ToastAction } from '@/components/ui/toast'
+import { LinkIcon } from 'lucide-react'
+import { usePathname } from 'next/navigation'
 
 interface PlayerRosterProps {
   members: {
@@ -32,6 +37,8 @@ interface Member {
 }
 
 const PlayerRoster = ({ members, gameId, guildId }: PlayerRosterProps) => {
+  const pathname = usePathname()
+  const { toast } = useToast()
   const [rounds, setRounds] = useRecoilState(dragDropMemberState)
   const currentRound =
     Object.keys(rounds).find((key) => rounds[key].hasSelected) ||
@@ -40,7 +47,6 @@ const PlayerRoster = ({ members, gameId, guildId }: PlayerRosterProps) => {
   useEffect(() => {
     setRounds((prevRounds) => {
       const updatedRoundsObject = { ...prevRounds }
-      console.log(updatedRoundsObject)
       for (const round in updatedRoundsObject) {
         if (updatedRoundsObject.hasOwnProperty(round)) {
           updatedRoundsObject[round] = {
@@ -124,14 +130,33 @@ const PlayerRoster = ({ members, gameId, guildId }: PlayerRosterProps) => {
   }
 
   const handleClickSave = async () => {
-    await saveTeamData(guildId, gameId)
+    try {
+      await saveTeamData(guildId, gameId, currentRound, rounds[currentRound])
+      toast({
+        title: `${currentRound}`,
+        description: `저장했습니다`,
+        action: (
+          <ToastAction
+            altText="copy current URL"
+            onClick={() => {
+              navigator.clipboard.writeText(`localhost:3000${pathname}`)
+              // navigator.clipboard.writeText(`junilbot.vercel.app${pathname}`)
+            }}
+          >
+            <LinkIcon />
+          </ToastAction>
+        ),
+      })
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   return (
     <div>
       <div className="flex items-center justify-between w-full mb-4">
         <Bo5DropDown />
-        <Button onClick={handleClickSave}>저장하기</Button>
+        <Button onClick={() => handleClickSave()}>저장하기</Button>
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <DragDropColumns />
@@ -184,6 +209,7 @@ const PlayerRoasterInRoot = ({
   return (
     <RecoilRoot>
       <PlayerRoster members={members} gameId={gameId} guildId={guildId} />
+      <Toaster />
     </RecoilRoot>
   )
 }
