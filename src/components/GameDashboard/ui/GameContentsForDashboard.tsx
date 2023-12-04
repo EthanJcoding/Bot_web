@@ -41,11 +41,7 @@ const GameContentsForDashboard = async ({
         </TabsContent>
 
         <TabsContent value="setting" className="space-y-4 ">
-          <PlayerRoasterInRoot
-            members={members}
-            guildId={guildId}
-            gameId={gameId}
-          />
+          <PlayerRoasterInRoot game={gameData.props} guildId={guildId} />
         </TabsContent>
       </Tabs>
     </div>

@@ -18,7 +18,30 @@ interface Member {
   acs: number
 }
 
-const DragDropColumns = () => {
+interface DragDropColumnsProps {
+  roundInfo: {
+    [key: string]: {
+      allMembers: PlayersProps[]
+      teamA: PlayersProps[]
+      teamB: PlayersProps[]
+      avgAcsTeamA: number
+      avgAcsTeamB: number
+      hasSelected: boolean
+      map: string
+      isSaved: boolean
+    }
+  }
+}
+
+interface PlayersProps {
+  gameUsername: string
+  joinedAt: string
+  user: string
+  avatar: string
+  acs: number
+}
+
+const DragDropColumns = ({ roundInfo }: DragDropColumnsProps) => {
   const [rounds, setRounds] = useRecoilState(dragDropMemberState)
   const currentRound =
     Object.keys(rounds).find((key) => rounds[key].hasSelected) ??
@@ -123,110 +146,221 @@ const DragDropColumns = () => {
     e.preventDefault()
   }
 
-  return (
-    <>
-      <Card
-        onDrop={(e) => handleOnDrop(e, 'members')}
-        onDragOver={handleDragOver}
-      >
-        <CardHeader>
-          <CardTitle>Members</CardTitle>
-          <CardDescription>드래그하여 팀 배정을 하세요</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {rounds[currentRound].allMembers.map((member, idx) => (
-            <div
-              key={idx}
-              className="flex justify-between"
-              draggable
-              onDragStart={(e) => handleOnDrag(e, member)}
-            >
-              <div className="flex">
-                <Grip className="h-4 w-4 text-muted-foreground mr-2" />
-                <div>
-                  <p className="text-sm font-medium leading-none">
-                    {member.user}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    {member.gameUsername}
-                  </p>
+  if (roundInfo[currentRound].isSaved) {
+    const { teamA, teamB, avgAcsTeamA, avgAcsTeamB } = roundInfo[currentRound]
+    let { allMembers } = roundInfo[currentRound]
+    if (!allMembers) {
+      allMembers = []
+    }
+    return (
+      <>
+        <Card
+          onDrop={(e) => handleOnDrop(e, 'members')}
+          onDragOver={handleDragOver}
+        >
+          <CardHeader>
+            <CardTitle>Members</CardTitle>
+            <CardDescription>드래그하여 팀 배정을 하세요</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {allMembers.map((member, idx) => (
+              <div
+                key={idx}
+                className="flex justify-between"
+                draggable
+                onDragStart={(e) => handleOnDrag(e, member)}
+              >
+                <div className="flex">
+                  <Grip className="h-4 w-4 text-muted-foreground mr-2" />
+                  <div>
+                    <p className="text-sm font-medium leading-none">
+                      {member.user}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      {member.gameUsername}
+                    </p>
+                  </div>
                 </div>
+                <p className="text-sm text-muted-foreground">{member.acs}</p>
               </div>
-              <p className="text-sm text-muted-foreground">{member.acs}</p>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
-      <Card
-        onDrop={(e) => handleOnDrop(e, 'teamA')}
-        onDragOver={handleDragOver}
-      >
-        <CardHeader>
-          <CardTitle>Team A</CardTitle>
-          <CardDescription>
-            평균 acs {Math.round(rounds[currentRound].avgAcsTeamA)}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {rounds[currentRound].teamA.map((memberA, idx) => (
-            <div
-              key={idx}
-              className="flex justify-between"
-              draggable
-              onDragStart={(e) => handleOnDrag(e, memberA)}
-            >
-              <div className="flex">
-                <Grip className="h-4 w-4 text-muted-foreground mr-2" />
-                <div>
-                  <p className="text-sm font-medium leading-none">
-                    {memberA.user}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    {memberA.gameUsername}
-                  </p>
+            ))}
+          </CardContent>
+        </Card>
+        <Card
+          onDrop={(e) => handleOnDrop(e, 'teamA')}
+          onDragOver={handleDragOver}
+        >
+          <CardHeader>
+            <CardTitle>Team A</CardTitle>
+            <CardDescription>
+              평균 acs {Math.round(avgAcsTeamA)}
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {teamA.map((memberA, idx) => (
+              <div
+                key={idx}
+                className="flex justify-between"
+                draggable
+                onDragStart={(e) => handleOnDrag(e, memberA)}
+              >
+                <div className="flex">
+                  <Grip className="h-4 w-4 text-muted-foreground mr-2" />
+                  <div>
+                    <p className="text-sm font-medium leading-none">
+                      {memberA.user}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      {memberA.gameUsername}
+                    </p>
+                  </div>
                 </div>
+                <p className="text-sm text-muted-foreground">{memberA.acs}</p>
               </div>
-              <p className="text-sm text-muted-foreground">{memberA.acs}</p>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
-      <Card
-        onDrop={(e) => handleOnDrop(e, 'teamB')}
-        onDragOver={handleDragOver}
-      >
-        <CardHeader>
-          <CardTitle>Team B</CardTitle>
-          <CardDescription>
-            평균 acs {Math.round(rounds[currentRound].avgAcsTeamB)}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {rounds[currentRound].teamB.map((memberB, idx) => (
-            <div
-              key={idx}
-              className="flex justify-between"
-              draggable
-              onDragStart={(e) => handleOnDrag(e, memberB)}
-            >
-              <div className="flex">
-                <Grip className="h-4 w-4 text-muted-foreground mr-2" />
-                <div>
-                  <p className="text-sm font-medium leading-none">
-                    {memberB.user}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    {memberB.gameUsername}
-                  </p>
+            ))}
+          </CardContent>
+        </Card>
+        <Card
+          onDrop={(e) => handleOnDrop(e, 'teamB')}
+          onDragOver={handleDragOver}
+        >
+          <CardHeader>
+            <CardTitle>Team B</CardTitle>
+            <CardDescription>
+              평균 acs {Math.round(avgAcsTeamB)}
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {teamB.map((memberB, idx) => (
+              <div
+                key={idx}
+                className="flex justify-between"
+                draggable
+                onDragStart={(e) => handleOnDrag(e, memberB)}
+              >
+                <div className="flex">
+                  <Grip className="h-4 w-4 text-muted-foreground mr-2" />
+                  <div>
+                    <p className="text-sm font-medium leading-none">
+                      {memberB.user}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      {memberB.gameUsername}
+                    </p>
+                  </div>
                 </div>
+                <p className="text-sm text-muted-foreground">{memberB.acs}</p>
               </div>
-              <p className="text-sm text-muted-foreground">{memberB.acs}</p>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
-    </>
-  )
+            ))}
+          </CardContent>
+        </Card>
+      </>
+    )
+  } else
+    return (
+      <>
+        <Card
+          onDrop={(e) => handleOnDrop(e, 'members')}
+          onDragOver={handleDragOver}
+        >
+          <CardHeader>
+            <CardTitle>Members</CardTitle>
+            <CardDescription>드래그하여 팀 배정을 하세요</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {rounds[currentRound].allMembers.map((member, idx) => (
+              <div
+                key={idx}
+                className="flex justify-between"
+                draggable
+                onDragStart={(e) => handleOnDrag(e, member)}
+              >
+                <div className="flex">
+                  <Grip className="h-4 w-4 text-muted-foreground mr-2" />
+                  <div>
+                    <p className="text-sm font-medium leading-none">
+                      {member.user}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      {member.gameUsername}
+                    </p>
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground">{member.acs}</p>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+        <Card
+          onDrop={(e) => handleOnDrop(e, 'teamA')}
+          onDragOver={handleDragOver}
+        >
+          <CardHeader>
+            <CardTitle>Team A</CardTitle>
+            <CardDescription>
+              평균 acs {Math.round(rounds[currentRound].avgAcsTeamA)}
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {rounds[currentRound].teamA.map((memberA, idx) => (
+              <div
+                key={idx}
+                className="flex justify-between"
+                draggable
+                onDragStart={(e) => handleOnDrag(e, memberA)}
+              >
+                <div className="flex">
+                  <Grip className="h-4 w-4 text-muted-foreground mr-2" />
+                  <div>
+                    <p className="text-sm font-medium leading-none">
+                      {memberA.user}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      {memberA.gameUsername}
+                    </p>
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground">{memberA.acs}</p>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+        <Card
+          onDrop={(e) => handleOnDrop(e, 'teamB')}
+          onDragOver={handleDragOver}
+        >
+          <CardHeader>
+            <CardTitle>Team B</CardTitle>
+            <CardDescription>
+              평균 acs {Math.round(rounds[currentRound].avgAcsTeamB)}
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {rounds[currentRound].teamB.map((memberB, idx) => (
+              <div
+                key={idx}
+                className="flex justify-between"
+                draggable
+                onDragStart={(e) => handleOnDrag(e, memberB)}
+              >
+                <div className="flex">
+                  <Grip className="h-4 w-4 text-muted-foreground mr-2" />
+                  <div>
+                    <p className="text-sm font-medium leading-none">
+                      {memberB.user}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      {memberB.gameUsername}
+                    </p>
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground">{memberB.acs}</p>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      </>
+    )
 }
 
 export default DragDropColumns

@@ -16,16 +16,40 @@ import { ToastAction } from '@/components/ui/toast'
 import { LinkIcon } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 
+interface PlayersProps {
+  gameUsername: string
+  joinedAt: string
+  user: string
+  avatar: string
+  acs: number
+}
 interface PlayerRosterProps {
-  members: {
-    gameUsername: string
-    joinedAt: string
-    user: string
-    avatar: string
-    acs: number
-  }[]
   guildId: string
-  gameId: string
+  game: {
+    createdBy: string
+    date: string
+    gameId: string
+    isActive: boolean
+    members: {
+      gameUsername: string
+      joinedAt: string
+      user: string
+      avatar: string
+      acs: number
+    }[]
+    roundInfo: { [key: string]: RoundInfo }
+  }
+}
+
+interface RoundInfo {
+  allMembers: PlayersProps[]
+  teamA: PlayersProps[]
+  teamB: PlayersProps[]
+  avgAcsTeamA: number
+  avgAcsTeamB: number
+  hasSelected: boolean
+  map: string
+  isSaved: boolean
 }
 
 interface Member {
@@ -36,7 +60,8 @@ interface Member {
   acs: number
 }
 
-const PlayerRoster = ({ members, gameId, guildId }: PlayerRosterProps) => {
+const PlayerRoster = ({ game, guildId }: PlayerRosterProps) => {
+  const { members, gameId, roundInfo } = game
   const pathname = usePathname()
   const { toast } = useToast()
   const [rounds, setRounds] = useRecoilState(dragDropMemberState)
@@ -89,7 +114,7 @@ const PlayerRoster = ({ members, gameId, guildId }: PlayerRosterProps) => {
   }
 
   const handleOptimalTeams = () => {
-    if (members.length < 10) {
+    if (game.members.length < 10) {
       alert('아직 팀원이 부족해요 😅')
     } else {
       const { teamA, teamB, avgAcsTeamA, avgAcsTeamB } =
@@ -159,7 +184,7 @@ const PlayerRoster = ({ members, gameId, guildId }: PlayerRosterProps) => {
         <Button onClick={() => handleClickSave()}>저장하기</Button>
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <DragDropColumns />
+        <DragDropColumns roundInfo={roundInfo} />
         <div className="grid gap-4 grid-rows-2">
           <Card>
             <CardHeader>
@@ -201,14 +226,10 @@ const PlayerRoster = ({ members, gameId, guildId }: PlayerRosterProps) => {
   )
 }
 
-const PlayerRoasterInRoot = ({
-  members,
-  gameId,
-  guildId,
-}: PlayerRosterProps) => {
+const PlayerRoasterInRoot = ({ game, guildId }: PlayerRosterProps) => {
   return (
     <RecoilRoot>
-      <PlayerRoster members={members} gameId={gameId} guildId={guildId} />
+      <PlayerRoster game={game} guildId={guildId} />
       <Toaster />
     </RecoilRoot>
   )

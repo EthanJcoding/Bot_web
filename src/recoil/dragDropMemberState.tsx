@@ -8,6 +8,7 @@ const generateRound = (hasSelected = false) => ({
   avgAcsTeamB: 0,
   map: '',
   hasSelected: hasSelected,
+  isSaved: false,
 })
 
 type DropDownMemberStateType = {
@@ -37,6 +38,7 @@ type DropDownMemberStateType = {
     avgAcsTeamB: number
     map: string
     hasSelected: boolean
+    isSaved: boolean
   }
 }
 
