@@ -1,5 +1,5 @@
-import { get, goOffline, ref } from 'firebase/database'
-import { database } from '@/app/firebase'
+import { get, ref } from 'firebase/database'
+import { database } from '@/firebase/config'
 
 interface Game {
   createdBy: string
@@ -35,11 +35,11 @@ export default async function getGuildData(guildId: string) {
       const guildData: guildData = snapshot.val()
       return { props: guildData }
     }
-    goOffline(database)
+
     return { props: { data: [] } }
   } catch (error) {
     console.error('Error fetching data:', error)
-    goOffline(database)
+
     return { props: { data: [] } }
   }
 }

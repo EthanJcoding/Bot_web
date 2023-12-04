@@ -16,6 +16,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
+import { useRecoilState } from 'recoil'
+import { dragDropMemberState } from '@/recoil/dragDropMemberState'
 
 const maps = [
   {
@@ -48,18 +50,38 @@ const maps = [
   },
 ]
 function getRandomElement(arr: typeof maps) {
-  if (!arr || arr.length === 0) {
-    return null
-  }
-
   const randomIndex = Math.floor(Math.random() * arr.length)
   return arr[randomIndex]
 }
 export function MapList() {
+  const [rounds, setRounds] = useRecoilState(dragDropMemberState)
   const [open, setOpen] = useState<boolean>(false)
-  const [label, setLabel] = useState<string>('')
+  const currentRound =
+    Object.keys(rounds).find((key) => rounds[key].hasSelected) ??
+    Object.keys(rounds)[0]
 
-  // 발로란트 api 연결되면, 해당 맵에서 가장 승률이 좋은 플레이어를 들먹이는 것도 좋을듯
+  const round = rounds[currentRound]
+
+  const handleClickRandom = () => {
+    const updatedMap = { ...round, map: getRandomElement(maps).label }
+    const updatedRounds = {
+      ...rounds,
+      [currentRound]: updatedMap,
+    }
+    setRounds(updatedRounds)
+  }
+
+  const handleClickList = (currentValue: string) => {
+    const updatedMap = { ...round, map: currentValue }
+    const updatedRounds = {
+      ...rounds,
+      [currentRound]: updatedMap,
+    }
+    setRounds(updatedRounds)
+    setOpen(false)
+  }
+
+  // 발로란트 api 연결되면, 해당 맵에서 가장 승률이 좋은 플레이어를 언급하는것도 좋을듯
 
   return (
     <div className="flex flex-col justify-between space-y-2">
@@ -71,7 +93,7 @@ export function MapList() {
             aria-expanded={open}
             className="flex justify-between"
           >
-            {label ? label : 'Select map...'}
+            {round.map ? round.map : 'Select map...'}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
@@ -84,15 +106,12 @@ export function MapList() {
                 <CommandItem
                   key={map.label}
                   value={map.label}
-                  onSelect={(currentValue) => {
-                    setLabel(currentValue === label ? '' : currentValue)
-                    setOpen(false)
-                  }}
+                  onSelect={(currentValue) => handleClickList(currentValue)}
                 >
                   <Check
                     className={cn(
                       'mr-2 h-4 w-4',
-                      label === map.label ? 'opacity-100' : 'opacity-0',
+                      round.map === map.label ? 'opacity-100' : 'opacity-0',
                     )}
                   />
                   {map.label}
@@ -102,10 +121,7 @@ export function MapList() {
           </Command>
         </PopoverContent>
       </Popover>
-      <Button
-        className="w-full"
-        onClick={() => setLabel(getRandomElement(maps)?.label ?? '')}
-      >
+      <Button className="w-full" onClick={() => handleClickRandom()}>
         Random
       </Button>
     </div>

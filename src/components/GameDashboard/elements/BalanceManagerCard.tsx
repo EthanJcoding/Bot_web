@@ -11,7 +11,7 @@ import {
 import findOptimalTeams from '@/utils/findOptimalTeams/findOptimalTeams'
 import SortingDropDown from './SortingDropdown'
 import { useState, useEffect, memo } from 'react'
-import shuffleArray from '@/utils/shuffleTeam/shuffleTeam'
+import { shuffleArray } from '@/utils'
 
 interface BalanceManagerProps {
   members: {
@@ -32,6 +32,9 @@ interface PlayersProps {
 }
 
 const BalanceManagerCard = ({ members }: BalanceManagerProps) => {
+  const SORT_OPTION_RANDOM = '랜덤 정렬'
+  const SORT_OPTION_ACS = 'acs 기준 정렬'
+
   const [options, setOptions] = useState<{
     teamA: PlayersProps[]
     teamB: PlayersProps[]
@@ -45,10 +48,11 @@ const BalanceManagerCard = ({ members }: BalanceManagerProps) => {
     avgAcsTeamB: 0,
     description: 'acs를 기반으로 자동으로 팀을 짜봤어요 🤔',
   })
+
   const updateTeams = (selectedOption: string) => {
     const updatedOptions = { ...options }
 
-    if (selectedOption === '랜덤 정렬') {
+    if (selectedOption === SORT_OPTION_RANDOM) {
       const shuffledMembers = shuffleArray(members)
       updatedOptions.teamA = shuffledMembers.teamA
       updatedOptions.teamB = shuffledMembers.teamB
@@ -66,72 +70,55 @@ const BalanceManagerCard = ({ members }: BalanceManagerProps) => {
 
     setOptions(updatedOptions)
   }
+
   useEffect(() => {
-    updateTeams('acs 기준 정렬')
+    updateTeams(SORT_OPTION_ACS)
   }, [])
 
   const handleSortingOptionChange = (selectedOption: string) => {
     updateTeams(selectedOption)
   }
 
-  const { teamA, teamB, avgAcsTeamA, avgAcsTeamB, description } = options
+  const renderTeam = (team: PlayersProps[]) => (
+    <div className="space-y-8 w-full">
+      <div>
+        acs 평균:{' '}
+        {team === options.teamA ? options.avgAcsTeamA : options.avgAcsTeamB}
+      </div>
+      {team.map((member, idx) => (
+        <div key={idx} className="flex justify-between space-x-4">
+          <div className="flex items-center">
+            <Avatar className="h-9 w-9">
+              <AvatarImage src={member.avatar} alt="Avatar" />
+            </Avatar>
+            <div className="ml-4 space-y-1">
+              <p className="text-sm font-medium leading-none">{member.user}</p>
+              <p className="text-sm text-muted-foreground">
+                {member.gameUsername}
+              </p>
+            </div>
+          </div>
+          <div>{member.acs}</div>
+        </div>
+      ))}
+    </div>
+  )
 
   return (
     <Card className="col-span-3 row-span-2">
       <div className="flex justify-between">
         <CardHeader>
           <CardTitle>팀빌딩 매니저</CardTitle>
-          <CardDescription>{description}</CardDescription>
+          <CardDescription>{options.description}</CardDescription>
         </CardHeader>
         <SortingDropDown onOptionChange={handleSortingOptionChange} />
       </div>
 
       <CardContent className="flex justify-between">
         <div className="flex justify-between w-full">
-          <div className="space-y-8 w-full">
-            <div>acs 평균: {avgAcsTeamA}</div>
-            {teamA.map((member, idx) => (
-              <div key={idx} className="flex justify-between space-x-4">
-                <div className="flex items-center">
-                  <Avatar className="h-9 w-9">
-                    <AvatarImage src={member.avatar} alt="Avatar" />
-                  </Avatar>
-                  <div className="ml-4 space-y-1">
-                    <p className="text-sm font-medium leading-none">
-                      {member.user}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      {member.gameUsername}
-                    </p>
-                  </div>
-                </div>
-                <div>{member.acs}</div>
-              </div>
-            ))}
-          </div>
+          {renderTeam(options.teamA)}
           <div className="flex items-center w-full justify-center">vs</div>
-
-          <div className="space-y-8 w-full">
-            <div>acs 평균: {avgAcsTeamB}</div>
-            {teamB.map((member, idx) => (
-              <div key={idx} className="flex justify-between space-x-4">
-                <div className="flex items-center">
-                  <Avatar className="h-9 w-9">
-                    <AvatarImage src={member.avatar} alt="Avatar" />
-                  </Avatar>
-                  <div className="ml-4 space-y-1">
-                    <p className="text-sm font-medium leading-none">
-                      {member.user}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      {member.gameUsername}
-                    </p>
-                  </div>
-                </div>
-                <div>{member.acs}</div>
-              </div>
-            ))}
-          </div>
+          {renderTeam(options.teamB)}
         </div>
       </CardContent>
     </Card>
