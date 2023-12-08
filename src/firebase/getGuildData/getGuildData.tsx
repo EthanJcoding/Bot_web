@@ -1,30 +1,6 @@
 import { get, ref } from 'firebase/database'
 import { database } from '@/firebase/config'
-
-interface Game {
-  createdBy: string
-  date: string
-  gameId: string
-  isActive: boolean
-  members: Array<{
-    gameUsername: string
-    joinedAt: string
-    user: string
-    avatar: string
-  }> // You may want to define a more specific type for members
-}
-
-interface GamesObject {
-  [gameId: string]: Game
-}
-
-export interface guildData {
-  games: GamesObject
-  id: string
-  isActive: boolean
-  joinedAt: string
-  name: string
-}
+import { Interfaces } from '@/utils'
 
 export default async function getGuildData(guildId: string) {
   try {
@@ -32,7 +8,7 @@ export default async function getGuildData(guildId: string) {
     const snapshot = await get(guildRef)
 
     if (snapshot.exists()) {
-      const guildData: guildData = snapshot.val()
+      const guildData: Interfaces.GuildData = snapshot.val()
       return { props: guildData }
     }
 

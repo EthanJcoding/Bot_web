@@ -9,21 +9,14 @@ import {
 import { Grip } from 'lucide-react'
 import { useRecoilState } from 'recoil'
 import { dragDropMemberState } from '@/recoil'
-
-interface Member {
-  avatar: string
-  gameUsername: string
-  joinedAt: string
-  user: string
-  acs: number
-}
+import { Interfaces } from '@/utils'
 
 interface DragDropColumnsProps {
   roundInfo: {
     [key: string]: {
-      allMembers: PlayersProps[]
-      teamA: PlayersProps[]
-      teamB: PlayersProps[]
+      allMembers: Interfaces.Member[]
+      teamA: Interfaces.Member[]
+      teamB: Interfaces.Member[]
       avgAcsTeamA: number
       avgAcsTeamB: number
       hasSelected: boolean
@@ -31,14 +24,6 @@ interface DragDropColumnsProps {
       isSaved: boolean
     }
   }
-}
-
-interface PlayersProps {
-  gameUsername: string
-  joinedAt: string
-  user: string
-  avatar: string
-  acs: number
 }
 
 const DragDropColumns = ({ roundInfo }: DragDropColumnsProps) => {
@@ -50,7 +35,7 @@ const DragDropColumns = ({ roundInfo }: DragDropColumnsProps) => {
   const handleOnDrop = useCallback(
     (e: React.DragEvent, targetTeam: 'members' | 'teamA' | 'teamB') => {
       e.preventDefault()
-      const calculateUpdatedAvgAcs = (team: Member[]) => {
+      const calculateUpdatedAvgAcs = (team: Interfaces.Member[]) => {
         const totalAcs = team.reduce((total, member) => total + member.acs, 0)
         return team.length > 0 ? totalAcs / team.length : 0
       }
@@ -59,9 +44,9 @@ const DragDropColumns = ({ roundInfo }: DragDropColumnsProps) => {
       const round = rounds[currentRound]
 
       const updateRound = (
-        updatedMembers: Member[],
-        updatedTeamA: Member[],
-        updatedTeamB: Member[],
+        updatedMembers: Interfaces.Member[],
+        updatedTeamA: Interfaces.Member[],
+        updatedTeamB: Interfaces.Member[],
       ) => {
         const updatedAvgAcsTeamA = calculateUpdatedAvgAcs(updatedTeamA)
         const updatedAvgAcsTeamB = calculateUpdatedAvgAcs(updatedTeamB)
@@ -135,7 +120,7 @@ const DragDropColumns = ({ roundInfo }: DragDropColumnsProps) => {
     [rounds, currentRound, setRounds],
   )
 
-  const handleOnDrag = (e: React.DragEvent, member: Member) => {
+  const handleOnDrag = (e: React.DragEvent, member: Interfaces.Member) => {
     const memberJSON = JSON.stringify(member)
     if (memberJSON) {
       e.dataTransfer.setData('member', memberJSON)

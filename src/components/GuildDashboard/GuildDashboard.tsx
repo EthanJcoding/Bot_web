@@ -1,14 +1,15 @@
 import getGuildData from '@/firebase/getGuildData/getGuildData'
 import ContentsForDashboard from './ui/ContentsForDashboard'
 import HeaderForDashboard from './ui/HeaderForDashboard'
-import { guildData } from '@/firebase/getGuildData/getGuildData'
+import { Interfaces } from '@/utils'
+
 interface CardProps {
   guildId: string
 }
 
 const GuildDashboard = async ({ guildId }: CardProps) => {
   const guildData = await getGuildData(guildId)
-  const { name, games } = guildData.props as guildData
+  const { name, games } = guildData.props as Interfaces.GuildData
 
   return (
     <section>
