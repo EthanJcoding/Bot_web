@@ -68,7 +68,7 @@ const BalanceManagerCard = ({ members }: BalanceManagerProps) => {
   const renderTeam = (team: Interfaces.Member[]) => (
     <div className="space-y-8 w-full">
       <div>
-        acs 평균:{' '}
+        acs 평균:
         {team === options.teamA ? options.avgAcsTeamA : options.avgAcsTeamB}
       </div>
       {team.map((member, idx) => (
