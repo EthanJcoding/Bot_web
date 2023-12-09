@@ -1,5 +1,6 @@
 import { get, ref } from 'firebase/database'
 import { database } from '@/firebase/config'
+import { Interfaces } from '@/utils'
 
 const getGameData = async (guildId: string, gameId: string) => {
   try {
@@ -7,14 +8,16 @@ const getGameData = async (guildId: string, gameId: string) => {
     const snapshot = await get(gameRef)
 
     if (snapshot.exists()) {
-      return { props: snapshot.val() }
+      const gameData: Interfaces.Game = snapshot.val()
+
+      return { props: gameData }
     }
 
     return { props: { data: [] } }
   } catch (error) {
     console.error('Error fetching data:', error)
 
-    return { props: { data: [], error: 'Failed to fetch data' } }
+    return { props: { data: [] } }
   }
 }
 

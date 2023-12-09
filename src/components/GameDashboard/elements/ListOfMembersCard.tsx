@@ -6,16 +6,11 @@ import {
   CardDescription,
   CardContent,
 } from '@/components/ui/card'
+import { Interfaces } from '@/utils'
 import dayjs from 'dayjs'
 
 interface ListOfMembersProps {
-  members: {
-    gameUsername: string
-    joinedAt: string
-    user: string
-    avatar: string
-    acs: number
-  }[]
+  members: Interfaces.Member[]
   date: string
 }
 

@@ -3,6 +3,7 @@ import BalanceManagerCard from '../elements/BalanceManagerCard'
 import ListOfMembersCard from '../elements/ListOfMembersCard'
 import PlayerRoasterInRoot from './PlayerRoster'
 import getGameData from '@/firebase/getGameData/getGameData'
+import { Interfaces } from '@/utils'
 
 interface GameContentsForDashBoardProps {
   guildId: string
@@ -15,7 +16,8 @@ const GameContentsForDashboard = async ({
 }: GameContentsForDashBoardProps) => {
   const gameData = await getGameData(guildId, gameId)
 
-  const { createdBy, date, members } = gameData.props
+  const { createdBy, date, members, roundInfo } =
+    gameData.props as Interfaces.Game
 
   return (
     <div className="flex-1 space-y-4 p-8 pt-6">
@@ -41,7 +43,12 @@ const GameContentsForDashboard = async ({
         </TabsContent>
 
         <TabsContent value="setting" className="space-y-4 ">
-          <PlayerRoasterInRoot game={gameData.props} guildId={guildId} />
+          <PlayerRoasterInRoot
+            roundInfo={roundInfo}
+            guildId={guildId}
+            gameId={gameId}
+            members={members}
+          />
         </TabsContent>
       </Tabs>
     </div>

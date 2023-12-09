@@ -18,6 +18,7 @@ export default function Home() {
       </div>
 
       <div>이 페이지는 랜딩페이지가 될 예정입니다.</div>
+      <div>This page will be a beautiful landing page.</div>
       <Link href="/guilds/1163455140351717469">
         Go ahead to explore this web by clicking this
       </Link>

@@ -1,14 +1,9 @@
 import GuildDashboard from '@/components/GuildDashboard/GuildDashboard'
-import TanstackProvider from '@/utils/providers/TanstackProvider'
 
 const guildPage = async ({ params }: { params: { guildId: string } }) => {
   const { guildId } = params
 
-  return (
-    <TanstackProvider>
-      <GuildDashboard guildId={guildId} />
-    </TanstackProvider>
-  )
+  return <GuildDashboard guildId={guildId} />
 }
 
 export default guildPage
