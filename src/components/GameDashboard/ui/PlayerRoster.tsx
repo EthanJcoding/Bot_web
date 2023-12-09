@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { RecoilRoot, useRecoilState } from 'recoil'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { MapList } from '../elements/MapList'
+import MapList from '../elements/MapList'
 import Bo5DropDown from '../elements/Bo5DropDown'
 import DragDropColumns from '../elements/DragDropColumns'
 import { shuffleArray, findOptimalTeams, Interfaces } from '@/utils'
@@ -39,11 +39,22 @@ const PlayerRoster = ({
   useEffect(() => {
     setRounds((prevRounds) => {
       const updatedRoundsObject = { ...prevRounds }
+
       for (const round in updatedRoundsObject) {
         if (updatedRoundsObject.hasOwnProperty(round)) {
-          updatedRoundsObject[round] = {
-            ...updatedRoundsObject[round],
-            allMembers: members,
+          const roundData = roundInfo[round]
+          if (roundData && roundData.isSaved) {
+            updatedRoundsObject[round] = {
+              ...updatedRoundsObject[round],
+              ...roundData,
+              isSaved: false, // Reset isSaved to false
+            }
+          } else if (roundData) {
+            // If isSaved is false, retain the existing data
+            updatedRoundsObject[round] = {
+              ...updatedRoundsObject[round],
+              allMembers: members,
+            }
           }
         }
       }
@@ -151,7 +162,7 @@ const PlayerRoster = ({
         <Button onClick={() => handleClickSave()}>저장하기</Button>
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <DragDropColumns roundInfo={roundInfo} />
+        <DragDropColumns />
         <div className="grid gap-4 grid-rows-2">
           <Card>
             <CardHeader>

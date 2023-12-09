@@ -53,7 +53,8 @@ function getRandomElement(arr: typeof maps) {
   const randomIndex = Math.floor(Math.random() * arr.length)
   return arr[randomIndex]
 }
-export function MapList() {
+
+const MapList = () => {
   const [rounds, setRounds] = useRecoilState(dragDropMemberState)
   const [open, setOpen] = useState<boolean>(false)
   const currentRound =
@@ -127,3 +128,5 @@ export function MapList() {
     </div>
   )
 }
+
+export default MapList

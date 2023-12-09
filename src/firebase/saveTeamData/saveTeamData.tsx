@@ -14,8 +14,15 @@ const saveTeamData = async (
 
     if (snapshot.exists()) {
       const game = snapshot.val()
-      roundData.isSaved = true
-      game.roundInfo[currentRound] = roundData
+
+      const updatedRoundData = { ...roundData }
+
+      updatedRoundData.isSaved = true
+      updatedRoundData.hasSelected = false
+
+      console.log(updatedRoundData)
+
+      game.roundInfo[currentRound] = updatedRoundData
 
       await update(gameRef, game)
     }
