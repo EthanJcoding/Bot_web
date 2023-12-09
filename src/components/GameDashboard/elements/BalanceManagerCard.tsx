@@ -11,24 +11,10 @@ import {
 import findOptimalTeams from '@/utils/findOptimalTeams/findOptimalTeams'
 import SortingDropDown from './SortingDropdown'
 import { useState, useEffect, memo } from 'react'
-import { shuffleArray } from '@/utils'
+import { Interfaces, shuffleArray } from '@/utils'
 
 interface BalanceManagerProps {
-  members: {
-    gameUsername: string
-    joinedAt: string
-    user: string
-    avatar: string
-    acs: number
-  }[]
-}
-
-interface PlayersProps {
-  gameUsername: string
-  joinedAt: string
-  user: string
-  avatar: string
-  acs: number
+  members: Interfaces.Member[]
 }
 
 const BalanceManagerCard = ({ members }: BalanceManagerProps) => {
@@ -36,8 +22,8 @@ const BalanceManagerCard = ({ members }: BalanceManagerProps) => {
   const SORT_OPTION_ACS = 'acs 기준 정렬'
 
   const [options, setOptions] = useState<{
-    teamA: PlayersProps[]
-    teamB: PlayersProps[]
+    teamA: Interfaces.Member[]
+    teamB: Interfaces.Member[]
     avgAcsTeamA: number
     avgAcsTeamB: number
     description: string
@@ -79,10 +65,10 @@ const BalanceManagerCard = ({ members }: BalanceManagerProps) => {
     updateTeams(selectedOption)
   }
 
-  const renderTeam = (team: PlayersProps[]) => (
+  const renderTeam = (team: Interfaces.Member[]) => (
     <div className="space-y-8 w-full">
       <div>
-        acs 평균:{' '}
+        acs 평균:
         {team === options.teamA ? options.avgAcsTeamA : options.avgAcsTeamB}
       </div>
       {team.map((member, idx) => (

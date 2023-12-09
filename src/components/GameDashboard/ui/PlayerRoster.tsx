@@ -4,10 +4,10 @@ import { useEffect } from 'react'
 import { RecoilRoot, useRecoilState } from 'recoil'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { MapList } from '../elements/MapList'
+import { MapList } from '../elements'
 import Bo5DropDown from '../elements/Bo5DropDown'
 import DragDropColumns from '../elements/DragDropColumns'
-import { shuffleArray, findOptimalTeams } from '@/utils'
+import { shuffleArray, findOptimalTeams, Interfaces } from '@/utils'
 import { dragDropMemberState } from '@/recoil'
 import { useToast } from '@/components/ui/use-toast'
 import saveTeamData from '@/firebase/saveTeamData/saveTeamData'
@@ -16,52 +16,19 @@ import { ToastAction } from '@/components/ui/toast'
 import { LinkIcon } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 
-interface PlayersProps {
-  gameUsername: string
-  joinedAt: string
-  user: string
-  avatar: string
-  acs: number
-}
 interface PlayerRosterProps {
   guildId: string
-  game: {
-    createdBy: string
-    date: string
-    gameId: string
-    isActive: boolean
-    members: {
-      gameUsername: string
-      joinedAt: string
-      user: string
-      avatar: string
-      acs: number
-    }[]
-    roundInfo: { [key: string]: RoundInfo }
-  }
+  gameId: string
+  roundInfo: Interfaces.RoundInfo
+  members: Interfaces.Member[]
 }
 
-interface RoundInfo {
-  allMembers: PlayersProps[]
-  teamA: PlayersProps[]
-  teamB: PlayersProps[]
-  avgAcsTeamA: number
-  avgAcsTeamB: number
-  hasSelected: boolean
-  map: string
-  isSaved: boolean
-}
-
-interface Member {
-  avatar: string
-  gameUsername: string
-  joinedAt: string
-  user: string
-  acs: number
-}
-
-const PlayerRoster = ({ game, guildId }: PlayerRosterProps) => {
-  const { members, gameId, roundInfo } = game
+const PlayerRoster = ({
+  gameId,
+  guildId,
+  roundInfo,
+  members,
+}: PlayerRosterProps) => {
   const pathname = usePathname()
   const { toast } = useToast()
   const [rounds, setRounds] = useRecoilState(dragDropMemberState)
@@ -72,11 +39,22 @@ const PlayerRoster = ({ game, guildId }: PlayerRosterProps) => {
   useEffect(() => {
     setRounds((prevRounds) => {
       const updatedRoundsObject = { ...prevRounds }
+
       for (const round in updatedRoundsObject) {
         if (updatedRoundsObject.hasOwnProperty(round)) {
-          updatedRoundsObject[round] = {
-            ...updatedRoundsObject[round],
-            allMembers: members,
+          const roundData = roundInfo[round]
+          if (roundData && roundData.isSaved) {
+            updatedRoundsObject[round] = {
+              ...updatedRoundsObject[round],
+              ...roundData,
+              isSaved: false, // Reset isSaved to false
+            }
+          } else if (roundData) {
+            // If isSaved is false, retain the existing data
+            updatedRoundsObject[round] = {
+              ...updatedRoundsObject[round],
+              allMembers: members,
+            }
           }
         }
       }
@@ -92,9 +70,9 @@ const PlayerRoster = ({ game, guildId }: PlayerRosterProps) => {
     avgAcsTeamA,
     avgAcsTeamB,
   }: {
-    allMembers: Member[]
-    teamA: Member[]
-    teamB: Member[]
+    allMembers: Interfaces.Member[]
+    teamA: Interfaces.Member[]
+    teamB: Interfaces.Member[]
     avgAcsTeamA: number
     avgAcsTeamB: number
   }) => {
@@ -114,7 +92,7 @@ const PlayerRoster = ({ game, guildId }: PlayerRosterProps) => {
   }
 
   const handleOptimalTeams = () => {
-    if (game.members.length < 10) {
+    if (members.length < 10) {
       alert('아직 팀원이 부족해요 😅')
     } else {
       const { teamA, teamB, avgAcsTeamA, avgAcsTeamB } =
@@ -184,7 +162,7 @@ const PlayerRoster = ({ game, guildId }: PlayerRosterProps) => {
         <Button onClick={() => handleClickSave()}>저장하기</Button>
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <DragDropColumns roundInfo={roundInfo} />
+        <DragDropColumns />
         <div className="grid gap-4 grid-rows-2">
           <Card>
             <CardHeader>
@@ -226,10 +204,20 @@ const PlayerRoster = ({ game, guildId }: PlayerRosterProps) => {
   )
 }
 
-const PlayerRoasterInRoot = ({ game, guildId }: PlayerRosterProps) => {
+const PlayerRoasterInRoot = ({
+  gameId,
+  guildId,
+  roundInfo,
+  members,
+}: PlayerRosterProps) => {
   return (
     <RecoilRoot>
-      <PlayerRoster game={game} guildId={guildId} />
+      <PlayerRoster
+        gameId={gameId}
+        guildId={guildId}
+        roundInfo={roundInfo}
+        members={members}
+      />
       <Toaster />
     </RecoilRoot>
   )

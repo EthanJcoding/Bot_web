@@ -1,28 +1,12 @@
 import { get, ref, update } from 'firebase/database'
 import { database } from '@/firebase/config'
-
-interface PlayersProps {
-  gameUsername: string
-  joinedAt: string
-  user: string
-  avatar: string
-  acs: number
-}
+import { Interfaces } from '@/utils'
 
 const saveTeamData = async (
   guildId: string,
   gameId: string,
   currentRound: string,
-  roundData: {
-    allMembers: PlayersProps[]
-    teamA: PlayersProps[]
-    teamB: PlayersProps[]
-    avgAcsTeamA: number
-    avgAcsTeamB: number
-    hasSelected: boolean
-    map: string
-    isSaved: boolean
-  },
+  roundData: Interfaces.RoundInterface,
 ) => {
   try {
     const gameRef = ref(database, `guilds/${guildId}/games/${gameId}`)
@@ -30,8 +14,15 @@ const saveTeamData = async (
 
     if (snapshot.exists()) {
       const game = snapshot.val()
-      roundData.isSaved = true
-      game.roundInfo[currentRound] = roundData
+
+      const updatedRoundData = { ...roundData }
+
+      updatedRoundData.isSaved = true
+      updatedRoundData.hasSelected = false
+
+      console.log(updatedRoundData)
+
+      game.roundInfo[currentRound] = updatedRoundData
 
       await update(gameRef, game)
     }

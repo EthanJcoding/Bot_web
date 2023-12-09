@@ -1,23 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import { Check, ChevronsUpDown } from 'lucide-react'
-import cn from '@/utils/cn/utils'
-import { Button } from '@/components/ui/button'
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from '@/components/ui/command'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
 import { useRecoilState } from 'recoil'
 import { dragDropMemberState } from '@/recoil/dragDropMemberState'
+import MapListPopover from './MapListPopover'
+import { Button } from '@/components/ui/button'
 
 const maps = [
   {
@@ -53,7 +40,8 @@ function getRandomElement(arr: typeof maps) {
   const randomIndex = Math.floor(Math.random() * arr.length)
   return arr[randomIndex]
 }
-export function MapList() {
+
+const MapList = () => {
   const [rounds, setRounds] = useRecoilState(dragDropMemberState)
   const [open, setOpen] = useState<boolean>(false)
   const currentRound =
@@ -85,45 +73,17 @@ export function MapList() {
 
   return (
     <div className="flex flex-col justify-between space-y-2">
-      <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
-          <Button
-            variant="outline"
-            role="combobox"
-            aria-expanded={open}
-            className="flex justify-between"
-          >
-            {round.map ? round.map : 'Select map...'}
-            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="max-w-[200px] p-0">
-          <Command>
-            <CommandInput placeholder="Search map..." />
-            <CommandEmpty>No map found.</CommandEmpty>
-            <CommandGroup>
-              {maps.map((map) => (
-                <CommandItem
-                  key={map.label}
-                  value={map.label}
-                  onSelect={(currentValue) => handleClickList(currentValue)}
-                >
-                  <Check
-                    className={cn(
-                      'mr-2 h-4 w-4',
-                      round.map === map.label ? 'opacity-100' : 'opacity-0',
-                    )}
-                  />
-                  {map.label}
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </Command>
-        </PopoverContent>
-      </Popover>
+      <MapListPopover
+        open={open}
+        onOpenChange={(open) => setOpen(open)}
+        onSelect={handleClickList}
+        round={round}
+      />
       <Button className="w-full" onClick={() => handleClickRandom()}>
         Random
       </Button>
     </div>
   )
 }
+
+export default MapList
