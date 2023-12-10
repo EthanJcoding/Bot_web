@@ -1,30 +1,6 @@
-export interface GameProps {
-  createdBy: string
-  date: string
-  gameId: string
-  isActive: boolean
-  members: Array<{
-    gameUsername: string
-    joinedAt: string
-    user: string
-    avatar: string
-  }>
-}
+import { Interfaces } from '@/utils'
 
-function usePreprocess(games: {
-  [key: string]: {
-    createdBy: string
-    date: string
-    isActive: boolean
-    gameId: string
-    members: Array<{
-      gameUsername: string
-      joinedAt: string
-      user: string
-      avatar: string
-    }>
-  }
-}) {
+function usePreprocess(games: Interfaces.GamesOfGuild) {
   const currentDate = new Date()
 
   const pastGamesCount = Object.values(games).filter(
@@ -40,6 +16,8 @@ function usePreprocess(games: {
 
   let nearestGame = null
   let nearestGameDate = null
+
+  console.log(games)
 
   for (const gameId in games) {
     const game = games[gameId]
@@ -67,8 +45,8 @@ function usePreprocess(games: {
 
   const totalParticipants = uniqueParticipants.length
 
-  const gameList: GameProps[] = Object.values(games).sort(
-    (a: GameProps, b: GameProps) => {
+  const gameList: Interfaces.Game[] = Object.values(games).sort(
+    (a: Interfaces.Game, b: Interfaces.Game) => {
       const dateA = new Date(a.date)
       const dateB = new Date(b.date)
 
