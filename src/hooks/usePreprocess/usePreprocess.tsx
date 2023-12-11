@@ -17,8 +17,6 @@ function usePreprocess(games: Interfaces.GamesOfGuild) {
   let nearestGame = null
   let nearestGameDate = null
 
-  console.log(games)
-
   for (const gameId in games) {
     const game = games[gameId]
     const gameDate = new Date(game.date)
