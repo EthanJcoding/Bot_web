@@ -6,24 +6,12 @@ import ScheduledGames from '../elements/SchduledGames'
 import GameList from '../elements/GameList'
 
 import UpcomingGameCard from '../elements/UpcomingGameCard'
+import { Interfaces } from '@/utils'
 
 interface ContentsForDashboardProps {
   name: string
   guildId: string
-  games: {
-    [key: string]: {
-      createdBy: string
-      date: string
-      isActive: boolean
-      gameId: string
-      members: Array<{
-        gameUsername: string
-        joinedAt: string
-        user: string
-        avatar: string
-      }>
-    }
-  }
+  games: Interfaces.GamesOfGuild
 }
 
 const ContentsForDashboard = ({

@@ -1,22 +1,10 @@
+import { Interfaces } from '@/utils'
 import GameSwitcher from '../elements/GameSwitcher'
 
 // const mockNavArr = ['overview', 'records', 'paricipants']
 interface HeaderForDashboardProps {
   guildId: string
-  games: {
-    [key: string]: {
-      createdBy: string
-      date: string
-      isActive: boolean
-      gameId: string
-      members: Array<{
-        gameUsername: string
-        joinedAt: string
-        user: string
-        avatar: string
-      }>
-    }
-  }
+  games: Interfaces.GamesOfGuild
 }
 const HeaderForDashboard = ({ games, guildId }: HeaderForDashboardProps) => {
   return (

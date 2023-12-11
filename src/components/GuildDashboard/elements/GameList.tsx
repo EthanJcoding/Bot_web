@@ -1,15 +1,14 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import dayjs from 'dayjs'
-
-import { GameProps } from '@/hooks/usePreprocess/usePreprocess'
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from '@/components/ui/hover-card'
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
+import { Interfaces } from '@/utils'
 interface GameListProps {
-  gameList: GameProps[]
+  gameList: Interfaces.Game[]
   guildId: string
 }
 
