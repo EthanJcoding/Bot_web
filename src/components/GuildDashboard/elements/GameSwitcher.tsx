@@ -11,23 +11,11 @@ import {
 import Link from 'next/link'
 import dayjs from 'dayjs'
 import usePreprocess from '@/hooks/usePreprocess/usePreprocess'
+import { Interfaces } from '@/utils'
 
 interface GameSwitcherProps {
   guildId: string
-  games: {
-    [key: string]: {
-      createdBy: string
-      date: string
-      isActive: boolean
-      gameId: string
-      members: Array<{
-        gameUsername: string
-        joinedAt: string
-        user: string
-        avatar: string
-      }>
-    }
-  }
+  games: Interfaces.GamesOfGuild
 }
 
 const GameSwitcher = ({ games, guildId }: GameSwitcherProps) => {

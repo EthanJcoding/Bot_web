@@ -6,20 +6,12 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { Interfaces } from '@/utils'
 import dayjs from 'dayjs'
 import Link from 'next/link'
 
 interface UpcomingGameCardProps {
-  nearestGame: {
-    gameId: string
-    date: string
-    members: Array<{
-      gameUsername: string
-      joinedAt: string
-      user: string
-      avatar: string
-    }>
-  } | null
+  nearestGame: Interfaces.Game | null
   guildId: string
 }
 
