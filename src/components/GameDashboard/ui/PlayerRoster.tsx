@@ -142,7 +142,7 @@ const PlayerRoster = ({
           <ToastAction
             altText="copy current URL"
             onClick={() => {
-              navigator.clipboard.writeText(`localhost:3000${pathname}`)
+              navigator.clipboard.writeText(`junilbot.vercel.app${pathname}`)
               // navigator.clipboard.writeText(`junilbot.vercel.app${pathname}`)
             }}
           >

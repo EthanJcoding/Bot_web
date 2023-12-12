@@ -31,6 +31,7 @@ const GameContentsForDashboard = async ({
         <TabsList>
           <TabsTrigger value="main">내전</TabsTrigger>
           <TabsTrigger value="setting">내전 세팅</TabsTrigger>
+          <TabsTrigger value="result">내전 결과</TabsTrigger>
         </TabsList>
 
         <TabsContent value="main" className="space-y-4">
