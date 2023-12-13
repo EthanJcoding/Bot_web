@@ -5,8 +5,7 @@ import {
   HoverCardTrigger,
   HoverCardContent,
 } from '@/components/ui/hover-card'
-import { CalendarDays } from 'lucide-react'
-import { CalendarSearchIcon } from 'lucide-react'
+import { CalendarDays, CalendarSearchIcon } from 'lucide-react'
 
 const GameDayCalendar = () => {
   return (

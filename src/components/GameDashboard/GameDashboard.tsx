@@ -8,12 +8,10 @@ interface GameDashboardProps {
 
 const GameDashboard = ({ guildId, gameId }: GameDashboardProps) => {
   return (
-    <section>
-      <div className="my-16 overflow-hidden rounded-[0.5rem] border bg-background shadow">
-        <div className="flex-col flex">
-          <HeaderForDashboard guildId={guildId} />
-          <GameContentsForDashboard guildId={guildId} gameId={gameId} />
-        </div>
+    <section className="my-16 overflow-hidden rounded-[0.5rem] border bg-background shadow">
+      <div className="flex-col flex">
+        <HeaderForDashboard guildId={guildId} />
+        <GameContentsForDashboard guildId={guildId} gameId={gameId} />
       </div>
     </section>
   )
