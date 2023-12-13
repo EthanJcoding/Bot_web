@@ -2,17 +2,26 @@
 
 import Lottie from 'react-lottie-player'
 import lottieJson from '../../../public/landingAnimation.json'
-import { Button } from '../ui/button'
 import Link from 'next/link'
+import { ArrowTopRightIcon } from '@radix-ui/react-icons'
 
 const LandingPage = () => {
   return (
     <section>
       <div className="my-16 overflow-hidden rounded-[0.5rem] ">
-        <div className="flex">
-          <div className="w-1/4 flex lg:flex-col flex-row justify-end space-y-4">
-            <Button>Document</Button>
-            <Button>
+        <div className="flex items-center justify-center">
+          <Lottie
+            className="flex relative"
+            loop
+            animationData={lottieJson}
+            play
+          />
+          <div className="absolute flex text-primary space-x-14 ">
+            <div className="flex items-center p-4 hover:bg-secondary rounded-lg">
+              <Link href="document">Document</Link>
+              <ArrowTopRightIcon className="ml-2" />
+            </div>
+            <div className="flex items-center p-4 hover:bg-secondary rounded-lg">
               <Link
                 href="https://discord.com/api/oauth2/authorize?client_id=1164492662435483711&permissions=8&scope=bot"
                 target="blank"
@@ -20,14 +29,9 @@ const LandingPage = () => {
               >
                 Add bot to Channel
               </Link>
-            </Button>
+              <ArrowTopRightIcon className="ml-2" />
+            </div>
           </div>
-          <Lottie
-            className="flex relative"
-            loop
-            animationData={lottieJson}
-            play
-          />
         </div>
       </div>
     </section>
