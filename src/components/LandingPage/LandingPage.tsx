@@ -18,7 +18,7 @@ const LandingPage = () => {
           />
           <div className="absolute flex text-primary space-x-14 ">
             <div className="flex items-center p-4 hover:bg-secondary rounded-lg">
-              <Link href="document">Document</Link>
+              <Link href="docs">Document</Link>
               <ArrowTopRightIcon className="ml-2" />
             </div>
             <div className="flex items-center p-4 hover:bg-secondary rounded-lg">
