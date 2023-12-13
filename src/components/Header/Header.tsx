@@ -27,16 +27,6 @@ const Header = () => {
               Document
             </Link>
             <Link
-              href="https://discord.com/api/oauth2/authorize?client_id=1164492662435483711&permissions=8&scope=bot"
-              target="blank"
-              rel="noopener noreferrer"
-              className={cn(
-                'transition-colors hover:text-foreground/80 text-foreground/60',
-              )}
-            >
-              Bot
-            </Link>
-            <Link
               href="/guilds/1163455140351717469/games/-NktFxho_aFaFvXxAyF3"
               className={cn(
                 'transition-colors hover:text-foreground/80',
@@ -48,6 +38,16 @@ const Header = () => {
               )}
             >
               Playground
+            </Link>
+            <Link
+              href="https://discord.com/api/oauth2/authorize?client_id=1164492662435483711&permissions=8&scope=bot"
+              target="blank"
+              rel="noopener noreferrer"
+              className={cn(
+                'transition-colors hover:text-foreground/80 text-foreground/60',
+              )}
+            >
+              Bot
             </Link>
             <Link
               href="https://github.com/EthanJcoding/Bot_web"
