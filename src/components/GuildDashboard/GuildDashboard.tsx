@@ -12,12 +12,10 @@ const GuildDashboard = async ({ guildId }: CardProps) => {
   const { name, games } = guildData.props as Interfaces.GuildData
 
   return (
-    <section>
-      <div className="my-16 overflow-hidden rounded-[0.5rem] border bg-background shadow">
-        <div className="flex-col flex">
-          <HeaderForDashboard games={games} guildId={guildId} />
-          <ContentsForDashboard name={name} games={games} guildId={guildId} />
-        </div>
+    <section className="my-16 overflow-hidden rounded-[0.5rem] border bg-background shadow">
+      <div className="flex-col flex">
+        <HeaderForDashboard games={games} guildId={guildId} />
+        <ContentsForDashboard name={name} games={games} guildId={guildId} />
       </div>
     </section>
   )
