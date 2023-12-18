@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
-import { RecoilRoot, useRecoilState } from 'recoil'
+import { useRecoilState } from 'recoil'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { MapList } from '../elements'
@@ -61,7 +61,7 @@ const PlayerRoster = ({
 
       return updatedRoundsObject
     })
-  }, [])
+  }, [members, roundInfo, setRounds])
 
   const updateRoundState = ({
     allMembers,
@@ -200,27 +200,9 @@ const PlayerRoster = ({
           </Card>
         </div>
       </div>
+      <Toaster />
     </div>
   )
 }
 
-const PlayerRoasterInRoot = ({
-  gameId,
-  guildId,
-  roundInfo,
-  members,
-}: PlayerRosterProps) => {
-  return (
-    <RecoilRoot>
-      <PlayerRoster
-        gameId={gameId}
-        guildId={guildId}
-        roundInfo={roundInfo}
-        members={members}
-      />
-      <Toaster />
-    </RecoilRoot>
-  )
-}
-
-export default PlayerRoasterInRoot
+export default PlayerRoster

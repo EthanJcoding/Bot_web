@@ -1,9 +1,9 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import BalanceManagerCard from '../elements/BalanceManagerCard'
 import ListOfMembersCard from '../elements/ListOfMembersCard'
-import PlayerRoasterInRoot from './PlayerRoster'
-import getGameData from '@/firebase/getGameData/getGameData'
+import RosterRoot from './RosterRoot'
 import { Interfaces } from '@/utils'
+import getGameData from '@/firebase/getGameData/getGameData'
 
 interface GameContentsForDashBoardProps {
   guildId: string
@@ -15,8 +15,7 @@ const GameContentsForDashboard = async ({
   gameId,
 }: GameContentsForDashBoardProps) => {
   const gameData = await getGameData(guildId, gameId)
-
-  const { createdBy, date, members, roundInfo } =
+  const { createdBy, members, date, roundInfo } =
     gameData.props as Interfaces.Game
 
   return (
@@ -44,7 +43,7 @@ const GameContentsForDashboard = async ({
         </TabsContent>
 
         <TabsContent value="setting" className="space-y-4 ">
-          <PlayerRoasterInRoot
+          <RosterRoot
             roundInfo={roundInfo}
             guildId={guildId}
             gameId={gameId}
