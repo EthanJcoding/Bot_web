@@ -9,14 +9,9 @@ const LandingPage = () => {
   return (
     <section>
       <div className="my-16 overflow-hidden rounded-[0.5rem] ">
-        <div className="flex items-center justify-center">
-          <Lottie
-            className="flex relative"
-            loop
-            animationData={lottieJson}
-            play
-          />
-          <div className="absolute flex text-primary space-x-14 ">
+        <div className="flex items-center justify-center lg:h-[750px] flex-col lg:flex-row">
+          <Lottie loop animationData={lottieJson} play />
+          <div className="lg:absolute lg:flex-row flex  text-primary space-x-14 ">
             <div className="flex items-center p-4 hover:bg-secondary rounded-lg">
               <Link href="docs">Document</Link>
               <ArrowTopRightIcon className="ml-2" />

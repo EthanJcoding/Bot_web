@@ -27,7 +27,7 @@ const Header = () => {
               Document
             </Link>
             <Link
-              href="/guilds/1163455140351717469/games/-NktFxho_aFaFvXxAyF3"
+              href="/guilds/1163455140351717469"
               className={cn(
                 'transition-colors hover:text-foreground/80',
                 pathname?.startsWith(
