@@ -1,3 +1,5 @@
+'use client'
+
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import {
   Card,
@@ -34,20 +36,35 @@ const UpcomingGameCard = ({ nearestGame, guildId }: UpcomingGameCardProps) => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="flex flex-wrap">
+            <div className="flex flex-col ">
               {nearestGame.members.map((member, idx) => {
                 return (
-                  <div key={idx} className="flex items-center w-1/2 mb-8">
-                    <Avatar className="h-9 w-9">
-                      <AvatarImage src={member.avatar} alt="Avatar" />
-                    </Avatar>
-                    <div className="ml-4 space-y-1">
-                      <p className="text-sm font-medium leading-none">
-                        {member.user}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        {member.gameUsername}
-                      </p>
+                  <div key={idx} className="flex justify-between items-center ">
+                    <div className="flex items-center w-1/2 ">
+                      <Avatar className="h-9 w-9">
+                        <AvatarImage src={member.avatar} alt="Avatar" />
+                      </Avatar>
+                      <Link
+                        href={`https://dak.gg/valorant/profile/${member.gameUsername.replace(
+                          '#',
+                          '-',
+                        )}`}
+                        target="blank"
+                        rel="noopener noreferrer"
+                        className="ml-4 hover:bg-accent transition-colors p-4 rounded-xl space-y-2"
+                      >
+                        <p className="text-sm font-medium leading-none">
+                          {member.user}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          {member.gameUsername}
+                        </p>
+                      </Link>
+                    </div>
+                    <div>
+                      <button className="text-foreground/60 text-sm hover:bg-accent transition-colors p-2 rounded-xl hover:text-foreground/80">
+                        실력 지표 입력하기
+                      </button>
                     </div>
                   </div>
                 )
