@@ -51,6 +51,8 @@ const Header = () => {
             </Link>
             <Link
               href="https://github.com/EthanJcoding/Bot_web"
+              target="blank"
+              rel="noopener noreferrer"
               className={cn(
                 'hidden text-foreground/60 transition-colors hover:text-foreground/80 lg:block',
               )}
