@@ -19,7 +19,7 @@ interface UpcomingGameCardProps {
 
 const UpcomingGameCard = ({ nearestGame, guildId }: UpcomingGameCardProps) => {
   return (
-    <Card className="col-span-4">
+    <Card className="col-span-3">
       {nearestGame ? (
         <>
           <CardHeader>
@@ -61,11 +61,11 @@ const UpcomingGameCard = ({ nearestGame, guildId }: UpcomingGameCardProps) => {
                         </p>
                       </Link>
                     </div>
-                    <div>
+                    {/* <div>
                       <button className="text-foreground/60 text-sm hover:bg-accent transition-colors p-2 rounded-xl hover:text-foreground/80">
                         실력 지표 입력하기
                       </button>
-                    </div>
+                    </div> */}
                   </div>
                 )
               })}
