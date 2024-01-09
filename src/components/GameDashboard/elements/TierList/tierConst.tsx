@@ -23,12 +23,12 @@ import immortal1 from '../../../../../public/rank/Immortal_1_Rank.png'
 import immortal2 from '../../../../../public/rank/Immortal_2_Rank.png'
 import immortal3 from '../../../../../public/rank/Immortal_3_Rank.png'
 import radiant from '../../../../../public/rank/Radiant_Rank.png'
-import 언랭 from '../../../../../public/rank/몰라모코콘.png'
+import unranked from '../../../../../public/rank/Unranked.png'
 
 const tierList = [
   {
     tier: '언랭',
-    segments: [{ tier: '언랭', image: 언랭 }],
+    segments: [{ tier: '언랭', image: unranked }],
   },
   {
     tier: '아이언',
@@ -100,4 +100,4 @@ const tierList = [
   },
 ]
 
-export { 언랭, tierList }
+export { unranked, tierList }
