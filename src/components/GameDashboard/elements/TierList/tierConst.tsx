@@ -28,12 +28,7 @@ import 언랭 from '../../../../../public/rank/몰라모코코
 const tierList = [
   {
     tier: '언랭',
-    segments: [
-      {
-        tier: '언랭',
-        image: 언랭,
-      },
-    ],
+    segments: [{ tier: '언랭', image: 언랭 }],
   },
   {
     tier: '아이언',

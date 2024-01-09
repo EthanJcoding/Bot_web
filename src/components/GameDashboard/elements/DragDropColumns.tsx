@@ -27,7 +27,10 @@ const DragDropColumns = () => {
     e.preventDefault()
 
     const calculateUpdatedAvgAcs = (team: Interfaces.Member[]) => {
-      const totalAcs = team.reduce((total, member) => total + member.acs, 0)
+      const totalAcs = team.reduce(
+        (total, member) => Number(total + member.acs),
+        0,
+      )
       return team.length > 0 ? totalAcs / team.length : 0
     }
 

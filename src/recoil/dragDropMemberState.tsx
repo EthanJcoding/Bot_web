@@ -1,3 +1,4 @@
+import { Interfaces } from '@/utils'
 import { atom } from 'recoil'
 
 const generateRound = (hasSelected = false) => ({
@@ -13,27 +14,9 @@ const generateRound = (hasSelected = false) => ({
 
 type DropDownMemberStateType = {
   [key: string]: {
-    allMembers: {
-      gameUsername: string
-      joinedAt: string
-      user: string
-      avatar: string
-      acs: number
-    }[]
-    teamA: {
-      gameUsername: string
-      joinedAt: string
-      user: string
-      avatar: string
-      acs: number
-    }[]
-    teamB: {
-      gameUsername: string
-      joinedAt: string
-      user: string
-      avatar: string
-      acs: number
-    }[]
+    allMembers: Interfaces.Member[]
+    teamA: Interfaces.Member[]
+    teamB: Interfaces.Member[]
     avgAcsTeamA: number
     avgAcsTeamB: number
     map: string
