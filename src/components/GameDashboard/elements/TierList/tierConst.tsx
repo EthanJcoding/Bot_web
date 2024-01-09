@@ -23,75 +23,86 @@ import immortal1 from '../../../../../public/rank/Immortal_1_Rank.png'
 import immortal2 from '../../../../../public/rank/Immortal_2_Rank.png'
 import immortal3 from '../../../../../public/rank/Immortal_3_Rank.png'
 import radiant from '../../../../../public/rank/Radiant_Rank.png'
+import 언랭 from '../../../../../public/rank/몰라모코콘.png'
 
-export const tierList = [
-  { tier: '언랭' },
+const tierList = [
+  {
+    tier: '언랭',
+    segments: [
+      {
+        tier: '언랭',
+        image: 언랭,
+      },
+    ],
+  },
   {
     tier: '아이언',
     segments: [
-      { tier: 'iron1', image: iron1 },
-      { tier: 'iron2', image: iron2 },
-      { tier: 'iron3', image: iron3 },
+      { tier: '아이언 1', image: iron1 },
+      { tier: '아이언 2', image: iron2 },
+      { tier: '아이언 3', image: iron3 },
     ],
   },
   {
     tier: '브론즈',
     segments: [
-      { tier: 'bronze1', image: bronze1 },
-      { tier: 'bronze2', image: bronze2 },
-      { tier: 'bronze3', image: bronze3 },
+      { tier: '브론즈 1', image: bronze1 },
+      { tier: '브론즈 2', image: bronze2 },
+      { tier: '브론즈 3', image: bronze3 },
     ],
   },
   {
     tier: '실버',
     segments: [
-      { tier: 'silver1', image: silver1 },
-      { tier: 'silver2', image: silver2 },
-      { tier: 'silver3', image: silver3 },
+      { tier: '실버 1', image: silver1 },
+      { tier: '실버 2', image: silver2 },
+      { tier: '실버 3', image: silver3 },
     ],
   },
   {
     tier: '골드',
     segments: [
-      { tier: 'gold1', image: gold1 },
-      { tier: 'gold2', image: gold2 },
-      { tier: 'gold3', image: gold3 },
+      { tier: '골드 1', image: gold1 },
+      { tier: '골드 2', image: gold2 },
+      { tier: '골드 3', image: gold3 },
     ],
   },
   {
     tier: '플래티넘',
     segments: [
-      { tier: 'platinum1', image: platinum1 },
-      { tier: 'platinum2', image: platinum2 },
-      { tier: 'platinum3', image: platinum3 },
+      { tier: '플래티넘 1', image: platinum1 },
+      { tier: '플래티넘 2', image: platinum2 },
+      { tier: '플래티넘 3', image: platinum3 },
     ],
   },
   {
     tier: '다이아몬드',
     segments: [
-      { tier: 'diamond1', image: diamond1 },
-      { tier: 'diamond2', image: diamond2 },
-      { tier: 'diamond3', image: diamond3 },
+      { tier: '다이아몬드 1', image: diamond1 },
+      { tier: '다이아몬드 2', image: diamond2 },
+      { tier: '다이아몬드 3', image: diamond3 },
     ],
   },
   {
     tier: '초월자',
     segments: [
-      { tier: 'ascendant1', image: ascendant1 },
-      { tier: 'ascendant2', image: ascendant2 },
-      { tier: 'ascendant3', image: ascendant3 },
+      { tier: '초월자 1', image: ascendant1 },
+      { tier: '초월자 2', image: ascendant2 },
+      { tier: '초월자 3', image: ascendant3 },
     ],
   },
   {
     tier: '불멸',
     segments: [
-      { tier: 'immortal1', image: immortal1 },
-      { tier: 'immortal2', image: immortal2 },
-      { tier: 'immortal3', image: immortal3 },
+      { tier: '불멸 1', image: immortal1 },
+      { tier: '불멸 2', image: immortal2 },
+      { tier: '불멸 3', image: immortal3 },
     ],
   },
   {
     tier: '레디언트',
-    segments: [{ tier: 'radiant', image: radiant }],
+    segments: [{ tier: '레디언트', image: radiant }],
   },
 ]
+
+export { 언랭, tierList }
