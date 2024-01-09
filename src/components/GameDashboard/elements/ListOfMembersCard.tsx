@@ -1,4 +1,3 @@
-import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import {
   Card,
   CardHeader,
@@ -8,8 +7,7 @@ import {
 } from '@/components/ui/card'
 import { Interfaces } from '@/utils'
 import dayjs from 'dayjs'
-import Link from 'next/link'
-import AcsInputDialog from './AcsInputDialog'
+import Member from './Member'
 
 interface ListOfMembersProps {
   members: Interfaces.Member[]
@@ -28,36 +26,7 @@ const ListOfMembersCard = ({ members, date }: ListOfMembersProps) => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div>
-          {members.map((member, idx) => {
-            return (
-              <div key={idx} className="flex justify-between">
-                <div className="flex items-center">
-                  <Avatar className="h-9 w-9">
-                    <AvatarImage src={member.avatar} alt="Avatar" />
-                  </Avatar>
-                  <Link
-                    href={`https://dak.gg/valorant/profile/${member.gameUsername.replace(
-                      '#',
-                      '-',
-                    )}`}
-                    target="blank"
-                    rel="noopener noreferrer"
-                    className="ml-4 hover:bg-accent transition-colors p-4 rounded-xl space-y-2"
-                  >
-                    <p className="text-sm font-medium leading-none">
-                      {member.user}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      {member.gameUsername}
-                    </p>
-                  </Link>
-                </div>
-                <AcsInputDialog />
-              </div>
-            )
-          })}
-        </div>
+        <Member members={members} />
       </CardContent>
     </Card>
   )

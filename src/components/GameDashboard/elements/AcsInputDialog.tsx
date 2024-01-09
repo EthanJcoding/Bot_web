@@ -12,12 +12,20 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-
 import { useState } from 'react'
 import TierListPopover from './TierList/TierListPopover'
 import TierToggle from './TierList/TierToggle'
+import saveUserData from '@/firebase/saveUserData/saveUserData'
+import { useParams } from 'next/navigation'
+import { Settings } from 'lucide-react'
 
-const AcsInputDialog = () => {
+interface AcsInputDialogProps {
+  gameUsername: string
+  edit?: boolean
+}
+
+const AcsInputDialog = ({ gameUsername, edit }: AcsInputDialogProps) => {
+  const params = useParams()
   const [selectedTier, setSelectedTier] = useState('')
   const [selectedTierSegment, setSelectedTierSegment] = useState('')
   const [open, setOpen] = useState<boolean>(false)
@@ -32,16 +40,29 @@ const AcsInputDialog = () => {
     setAcs(acs)
   }
 
-  const handleSubmit = () => {
-    console.log(selectedTier, selectedTierSegment, acs)
+  const handleSubmit = async () => {
+    const guildId = params.guildId as string
+    const gameId = params.gameId as string
+    const tier = selectedTier + ' ' + selectedTierSegment
+
+    await saveUserData(guildId, gameId, gameUsername, tier, acs)
+    setOpen(false)
   }
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className="text-foreground/60 text-sm hover:bg-accent transition-colors p-2 rounded-xl hover:text-foreground/80">
-          실력 지표 입력하기
-        </button>
+        {edit ? (
+          <div className="text-foreground/60 text-sm p-2 items-center justify-center flex flex-col rounded-xl">
+            <Button variant="ghost" size="icon">
+              <Settings />
+            </Button>
+          </div>
+        ) : (
+          <button className="text-foreground/60 text-sm hover:bg-accent transition-colors p-2 rounded-xl hover:text-foreground/80">
+            실력 지표 입력하기
+          </button>
+        )}
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] ">
         <DialogHeader>
