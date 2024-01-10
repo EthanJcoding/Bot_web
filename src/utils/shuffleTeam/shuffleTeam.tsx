@@ -1,13 +1,8 @@
 // Shuffle an array using Fisher-Yates shuffle algorithm
-interface PlayersProps {
-  acs: number
-  avatar: string
-  gameUsername: string
-  joinedAt: string
-  user: string
-}
 
-const shuffleArray = (players: PlayersProps[]) => {
+import { Interfaces } from '..'
+
+const shuffleArray = (players: Interfaces.Member[]) => {
   const shuffledPlayers = [...players]
 
   for (let i = shuffledPlayers.length - 1; i > 0; i--) {
@@ -31,10 +26,10 @@ const shuffleArray = (players: PlayersProps[]) => {
   return { teamA, teamB, avgAcsTeamA, avgAcsTeamB }
 }
 
-function calculateAcsAverage(team: PlayersProps[]) {
+function calculateAcsAverage(team: Interfaces.Member[]) {
   if (team.length === 0) return 0
 
-  const totalAcs = team.reduce((total, player) => total + player.acs, 0)
+  const totalAcs = team.reduce((total, player) => total + Number(player.acs), 0)
   return totalAcs / team.length
 }
 

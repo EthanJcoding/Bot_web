@@ -3,7 +3,8 @@ export interface Member {
   joinedAt: string
   user: string
   avatar: string
-  acs: number
+  acs: string
+  tier: string
 }
 
 export interface Game {

@@ -4,6 +4,7 @@ import TanstackProvider from './providers/TanstackProvider'
 import ThemeProvider from './providers/ThemeProvider'
 import { calculateAcsAverage, shuffleArray } from './shuffleTeam/shuffleTeam'
 import * as Interfaces from './interfaces/interfaces'
+import getTierImage from './getTierImage/getTierImage'
 
 export {
   cn,
@@ -13,4 +14,5 @@ export {
   calculateAcsAverage,
   shuffleArray,
   Interfaces,
+  getTierImage,
 }

@@ -1,32 +1,26 @@
-interface PlayersProps {
-  acs: number
-  avatar: string
-  gameUsername: string
-  joinedAt: string
-  user: string
-}
+import { Interfaces } from '..'
 
 interface OptimalTeamsResult {
-  teamA: PlayersProps[]
-  teamB: PlayersProps[]
+  teamA: Interfaces.Member[]
+  teamB: Interfaces.Member[]
   avgAcsTeamA: number
   avgAcsTeamB: number
 }
 
-function findOptimalTeams(players: PlayersProps[]): OptimalTeamsResult {
+function findOptimalTeams(players: Interfaces.Member[]): OptimalTeamsResult {
   const n = players.length
   const halfN = n / 2
 
   let minDiff = Infinity
-  let optimalTeamA: PlayersProps[] = []
-  let optimalTeamB: PlayersProps[] = []
+  let optimalTeamA: Interfaces.Member[] = []
+  let optimalTeamB: Interfaces.Member[] = []
 
   // Generate all possible combinations of players
   for (let mask = 0; mask < 1 << n; mask++) {
     if (countBits(mask) !== halfN) continue
 
-    const teamA: PlayersProps[] = []
-    const teamB: PlayersProps[] = []
+    const teamA: Interfaces.Member[] = []
+    const teamB: Interfaces.Member[] = []
 
     for (let i = 0; i < n; i++) {
       if (mask & (1 << i)) {
@@ -48,8 +42,8 @@ function findOptimalTeams(players: PlayersProps[]): OptimalTeamsResult {
   }
 
   return {
-    teamA: optimalTeamA.sort((a, b) => b.acs - a.acs),
-    teamB: optimalTeamB.sort((a, b) => b.acs - a.acs),
+    teamA: optimalTeamA.sort((a, b) => Number(b.acs) - Number(a.acs)),
+    teamB: optimalTeamB.sort((a, b) => Number(b.acs) - Number(a.acs)),
     avgAcsTeamA: calculateAcsAverage(optimalTeamA),
     avgAcsTeamB: calculateAcsAverage(optimalTeamB),
   }
@@ -64,10 +58,10 @@ function countBits(num: number) {
   return count
 }
 
-function calculateAcsAverage(team: PlayersProps[]) {
+function calculateAcsAverage(team: Interfaces.Member[]) {
   if (team.length === 0) return 0
 
-  const totalAcs = team.reduce((total, player) => total + player.acs, 0)
+  const totalAcs = team.reduce((total, player) => total + Number(player.acs), 0)
   return totalAcs / team.length
 }
 

@@ -20,8 +20,6 @@ const saveTeamData = async (
       updatedRoundData.isSaved = true
       updatedRoundData.hasSelected = false
 
-      console.log(updatedRoundData)
-
       game.roundInfo[currentRound] = updatedRoundData
 
       await update(gameRef, game)
