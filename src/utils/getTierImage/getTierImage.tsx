@@ -1,6 +1,6 @@
 import {
   tierList,
-  언랭,
+  unranked,
 } from '@/components/GameDashboard/elements/TierList/tierConst'
 
 const getTierImage = (targetTier: string) => {
@@ -13,7 +13,7 @@ const getTierImage = (targetTier: string) => {
       }
     }
   }
-  return 언랭
+  return unranked
 }
 
 export default getTierImage
