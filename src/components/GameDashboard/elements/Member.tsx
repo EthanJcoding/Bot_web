@@ -3,18 +3,17 @@
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import Link from 'next/link'
 import AcsInputDialog from './AcsInputDialog'
-import { Interfaces } from '@/utils'
 import { getTierImage } from '@/utils'
 import Image from 'next/image'
+import { useRecoilValue } from 'recoil'
+import { memberCardsState } from '@/recoil'
 
-interface MemberProps {
-  members: Interfaces.Member[]
-}
+const Member = () => {
+  const membersCard = useRecoilValue(memberCardsState)
 
-const Member = ({ members }: MemberProps) => {
   return (
-    <div>
-      {members.map((member, idx) => {
+    <>
+      {membersCard.map((member, idx) => {
         if (member.acs !== '' && member.tier !== '') {
           return (
             <div key={idx} className="flex justify-between items-center">
@@ -39,17 +38,25 @@ const Member = ({ members }: MemberProps) => {
                   </p>
                 </Link>
               </div>
-              <Image
-                src={getTierImage(member.tier)}
-                alt="tier image"
-                className="w-9 h-9"
-              />
-              <AcsInputDialog gameUsername={member.gameUsername} edit={true} />
+              <div className="flex items-center space-x-4 p-2 w-full justify-end">
+                <Image
+                  src={getTierImage(member.tier)}
+                  alt="tier image"
+                  className="w-10 h-10"
+                />
+                <div className="text-sm text-muted-foreground ">
+                  {member.acs}
+                </div>
+                <AcsInputDialog
+                  gameUsername={member.gameUsername}
+                  edit={true}
+                />
+              </div>
             </div>
           )
         } else
           return (
-            <div key={idx} className="flex justify-between">
+            <div key={idx} className="flex justify-between items-center">
               <div className="flex items-center">
                 <Avatar className="h-10 w-10">
                   <AvatarImage src={member.avatar} alt="Avatar" />
@@ -71,11 +78,13 @@ const Member = ({ members }: MemberProps) => {
                   </p>
                 </Link>
               </div>
-              <AcsInputDialog gameUsername={member.gameUsername} />
+              <div className="flex items-center space-x-4 p-2 w-full justify-end">
+                <AcsInputDialog gameUsername={member.gameUsername} />
+              </div>
             </div>
           )
       })}
-    </div>
+    </>
   )
 }
 

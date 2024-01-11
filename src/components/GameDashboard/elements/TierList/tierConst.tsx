@@ -28,7 +28,7 @@ import unranked from '../../../../../public/rank/Unranked.png'
 const tierList = [
   {
     tier: '언랭',
-    segments: [{ tier: '언랭', image: unranked }],
+    segments: [{ tier: '언랭 ', image: unranked }],
   },
   {
     tier: '아이언',
@@ -96,7 +96,7 @@ const tierList = [
   },
   {
     tier: '레디언트',
-    segments: [{ tier: '레디언트', image: radiant }],
+    segments: [{ tier: '레디언트 ', image: radiant }],
   },
 ]
 
