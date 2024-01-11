@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Card,
   CardHeader,
@@ -5,16 +7,19 @@ import {
   CardDescription,
   CardContent,
 } from '@/components/ui/card'
-import { Interfaces } from '@/utils'
 import dayjs from 'dayjs'
 import Member from './Member'
+import MemberSkeleton from './MemberSkeleton'
 
 interface ListOfMembersProps {
-  members: Interfaces.Member[]
   date: string
+  isLoading: boolean
 }
 
-const ListOfMembersCard = ({ members, date }: ListOfMembersProps) => {
+const ListOfMembersCard: React.FC<ListOfMembersProps> = ({
+  date,
+  isLoading,
+}) => {
   return (
     <Card className="col-span-3">
       <CardHeader>
@@ -25,9 +30,7 @@ const ListOfMembersCard = ({ members, date }: ListOfMembersProps) => {
           )}
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <Member members={members} />
-      </CardContent>
+      <CardContent>{isLoading ? <MemberSkeleton /> : <Member />}</CardContent>
     </Card>
   )
 }

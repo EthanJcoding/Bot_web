@@ -1,9 +1,6 @@
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
-import BalanceManagerCard from '../elements/BalanceManagerCard'
-import ListOfMembersCard from '../elements/ListOfMembersCard'
-import RosterRoot from './RosterRoot'
 import { Interfaces } from '@/utils'
 import getGameData from '@/firebase/getGameData/getGameData'
+import GameTabsRoot from '../elements/GameTabs'
 
 interface GameContentsForDashBoardProps {
   guildId: string
@@ -26,31 +23,7 @@ const GameContentsForDashboard = async ({
         </h2>
         <div />
       </div>
-      <Tabs defaultValue="main" className="space-y-4 items-center">
-        <TabsList>
-          <TabsTrigger value="main">내전</TabsTrigger>
-          <TabsTrigger value="setting">내전 세팅</TabsTrigger>
-          <TabsTrigger value="result">내전 결과</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="main" className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-            <ListOfMembersCard members={members} date={date} />
-            <div className="grid col-span-4 grid-rows-3 gap-4">
-              <BalanceManagerCard members={members} />
-            </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="setting" className="space-y-4 ">
-          <RosterRoot
-            roundInfo={roundInfo}
-            guildId={guildId}
-            gameId={gameId}
-            members={members}
-          />
-        </TabsContent>
-      </Tabs>
+      <GameTabsRoot members={members} date={date} roundInfo={roundInfo} />
     </div>
   )
 }

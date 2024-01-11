@@ -14,21 +14,15 @@ import saveTeamData from '@/firebase/saveTeamData/saveTeamData'
 import { Toaster } from '@/components/ui/toaster'
 import { ToastAction } from '@/components/ui/toast'
 import { LinkIcon } from 'lucide-react'
-import { usePathname } from 'next/navigation'
+import { useParams, usePathname } from 'next/navigation'
 
 interface PlayerRosterProps {
-  guildId: string
-  gameId: string
   roundInfo: Interfaces.RoundInfo
   members: Interfaces.Member[]
 }
 
-const PlayerRoster = ({
-  gameId,
-  guildId,
-  roundInfo,
-  members,
-}: PlayerRosterProps) => {
+const PlayerRoster = ({ roundInfo, members }: PlayerRosterProps) => {
+  const params = useParams()
   const pathname = usePathname()
   const { toast } = useToast()
   const [rounds, setRounds] = useRecoilState(dragDropMemberState)
@@ -133,6 +127,9 @@ const PlayerRoster = ({
   }
 
   const handleClickSave = async () => {
+    const guildId = params.guildId as string
+    const gameId = params.gameId as string
+
     try {
       await saveTeamData(guildId, gameId, currentRound, rounds[currentRound])
       toast({
