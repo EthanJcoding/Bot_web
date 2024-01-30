@@ -22,6 +22,7 @@ import { memberCardsState } from '@/recoil'
 import { useRecoilState } from 'recoil'
 import { useToast } from '@/components/ui/use-toast'
 import { Toaster } from '@/components/ui/toaster'
+import deleteMember from '@/firebase/deleteMember/deleteMember'
 
 interface AcsInputDialogProps {
   gameUsername: string
@@ -80,6 +81,31 @@ const AcsInputDialog = ({ gameUsername, edit }: AcsInputDialogProps) => {
         title: `${editedGameUsername} 은(는) 이미 존재합니다`,
       })
       setEditedGameUsername(gameUsername)
+    }
+  }
+
+  const handleDelete = async () => {
+    const guildId = params.guildId as string
+    const gameId = params.gameId as string
+
+    // Find the index of the member to be deleted
+    const memberIndex = memberCards.findIndex(
+      (member) => member.gameUsername === gameUsername,
+    )
+
+    if (memberIndex !== -1) {
+      // Remove the member from the memberCards array
+      const updatedMemberCards = [...memberCards]
+      updatedMemberCards.splice(memberIndex, 1)
+
+      // Update the recoil state with the new memberCards array
+      setMemberCards(updatedMemberCards)
+      await deleteMember(guildId, gameId, gameUsername)
+      // Additional logic after deletion (replace with your own logic)
+      console.log(memberCards)
+    } else {
+      // Handle case where member is not found
+      console.error(`Member ${gameUsername} not found for deletion.`)
     }
   }
 
@@ -155,12 +181,20 @@ const AcsInputDialog = ({ gameUsername, edit }: AcsInputDialogProps) => {
               />
             </div>
           </div>
-          <DialogClose
-            onClick={() => handleSubmit()}
-            className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
-          >
-            Save changes
-          </DialogClose>
+          <div className="w-full flex space-x-2">
+            <DialogClose
+              onClick={() => handleSubmit()}
+              className="w-full inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+            >
+              저장하기
+            </DialogClose>
+            <DialogClose
+              onClick={() => handleDelete()}
+              className="w-full inline-flex items-center justify-center bg-secondary whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary hover:bg-secondary/90 h-10 px-4 py-2"
+            >
+              삭제하기
+            </DialogClose>
+          </div>
         </DialogContent>
       </Dialog>
       <Toaster />

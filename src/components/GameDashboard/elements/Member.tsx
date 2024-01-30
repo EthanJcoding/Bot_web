@@ -36,7 +36,7 @@ const Member = () => {
                   </p>
                 </Link>
               </div>
-              <div className="flex items-center space-x-4 p-2 w-full justify-end">
+              <div className="flex items-center space-x-4 w-full justify-end">
                 <Image
                   src={getTierImage(member.tier)}
                   alt="tier image"

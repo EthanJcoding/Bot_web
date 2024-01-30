@@ -22,6 +22,8 @@ export interface RoundInterface {
   teamB: Member[]
   avgAcsTeamA: number
   avgAcsTeamB: number
+  compensatedAcsTeamA?: number
+  compensatedAcsTeamB?: number
   hasSelected?: boolean
   map?: string
   isSaved?: boolean

@@ -13,13 +13,16 @@ const TeamRenderer = () => {
     teamB: optimalTeams.teamB,
     avgAcsTeamA: optimalTeams.avgAcsTeamA,
     avgAcsTeamB: optimalTeams.avgAcsTeamB,
+    compensatedAcsTeamA: optimalTeams.compensatedAcsTeamA,
+    compensatedAcsTeamB: optimalTeams.compensatedAcsTeamB,
   }
 
   return (
     <>
       <div className="space-y-8 w-full">
-        <div className="text-sm text-muted-foreground">
-          Team acs: {options.avgAcsTeamA}
+        <div className="text-sm text-muted-foreground flex flex-col space-y-2">
+          <span>티어 보정된 ACS: {options.compensatedAcsTeamA}</span>
+          <span>평균 ACS: {options.avgAcsTeamA}</span>
         </div>
         {options.teamA.map((member, idx) => (
           <div key={idx} className="flex justify-between items-center">
@@ -46,8 +49,9 @@ const TeamRenderer = () => {
       </div>
       <div className="flex items-center w-full justify-center">vs</div>
       <div className="space-y-8 w-full">
-        <div className="text-sm text-muted-foreground">
-          Team acs: {options.avgAcsTeamB}
+        <div className="text-sm text-muted-foreground flex flex-col space-y-2">
+          <span>티어 보정된 ACS: {options.compensatedAcsTeamB}</span>
+          <span>평균 ACS: {options.avgAcsTeamB}</span>
         </div>
         {options.teamB.map((member, idx) => (
           <div key={idx} className="flex justify-between items-center">
