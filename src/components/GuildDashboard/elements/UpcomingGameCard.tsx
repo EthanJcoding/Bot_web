@@ -19,7 +19,7 @@ interface UpcomingGameCardProps {
 
 const UpcomingGameCard = ({ nearestGame, guildId }: UpcomingGameCardProps) => {
   return (
-    <Card className="col-span-3">
+    <Card className="col-span-4">
       {nearestGame ? (
         <>
           <CardHeader>
@@ -39,8 +39,11 @@ const UpcomingGameCard = ({ nearestGame, guildId }: UpcomingGameCardProps) => {
             <div className="flex flex-col ">
               {nearestGame.members.map((member, idx) => {
                 return (
-                  <div key={idx} className="flex justify-between items-center ">
-                    <div className="flex items-center w-1/2 ">
+                  <div
+                    key={idx}
+                    className="flex justify-between items-center w-full"
+                  >
+                    <div className="flex items-center">
                       <Avatar className="h-9 w-9">
                         <AvatarImage src={member.avatar} alt="Avatar" />
                       </Avatar>
@@ -61,11 +64,6 @@ const UpcomingGameCard = ({ nearestGame, guildId }: UpcomingGameCardProps) => {
                         </p>
                       </Link>
                     </div>
-                    {/* <div>
-                      <button className="text-foreground/60 text-sm hover:bg-accent transition-colors p-2 rounded-xl hover:text-foreground/80">
-                        실력 지표 입력하기
-                      </button>
-                    </div> */}
                   </div>
                 )
               })}
