@@ -37,8 +37,8 @@ function findOptimalTeams(
   }
 
   return {
-    teamA: optimalTeamA.sort((a, b) => Number(b.acs) - Number(a.acs)),
-    teamB: optimalTeamB.sort((a, b) => Number(b.acs) - Number(a.acs)),
+    teamA: optimalTeamA.sort((a, b) => b.acs - a.acs),
+    teamB: optimalTeamB.sort((a, b) => b.acs - a.acs),
     avgAcsTeamA: calculateAcsAverage(optimalTeamA),
     avgAcsTeamB: calculateAcsAverage(optimalTeamB),
   }
@@ -56,7 +56,7 @@ function countBits(num: number) {
 function calculateAcsAverage(team: Interfaces.Member[]) {
   if (team.length === 0) return 0
 
-  const totalAcs = team.reduce((total, player) => total + Number(player.acs), 0)
+  const totalAcs = team.reduce((total, player) => total + player.acs, 0)
   return totalAcs / team.length
 }
 

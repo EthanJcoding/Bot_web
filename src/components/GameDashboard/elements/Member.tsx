@@ -12,7 +12,7 @@ const Member = () => {
   return (
     <>
       {membersCard.map((member, idx) => {
-        if (member.acs !== '' && member.tier !== '') {
+        if (member.acs > 0 && member.tier !== '') {
           return (
             <div key={idx} className="flex justify-between items-center">
               <div className="flex items-center w-full">

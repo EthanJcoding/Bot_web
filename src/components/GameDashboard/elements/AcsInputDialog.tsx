@@ -34,7 +34,7 @@ const AcsInputDialog = ({ gameUsername, edit }: AcsInputDialogProps) => {
   const [selectedTier, setSelectedTier] = useState('')
   const [selectedTierSegment, setSelectedTierSegment] = useState('')
   const [open, setOpen] = useState<boolean>(false)
-  const [acs, setAcs] = useState('')
+  const [acs, setAcs] = useState(0)
   const [memberCards, setMemberCards] = useRecoilState(memberCardsState)
   const [editedGameUsername, setEditedGameUsername] = useState(gameUsername)
 
@@ -43,7 +43,7 @@ const AcsInputDialog = ({ gameUsername, edit }: AcsInputDialogProps) => {
     setOpen(false)
   }
 
-  const handleInputAcs = (acs: string) => {
+  const handleInputAcs = (acs: number) => {
     setAcs(acs)
   }
 
@@ -150,7 +150,7 @@ const AcsInputDialog = ({ gameUsername, edit }: AcsInputDialogProps) => {
                 id="acs"
                 type="number"
                 value={acs}
-                onChange={(e) => handleInputAcs(e.target.value)}
+                onChange={(e) => handleInputAcs(Number(e.target.value))}
                 className="col-span-3 outline-none"
               />
             </div>

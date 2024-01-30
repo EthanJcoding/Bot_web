@@ -3,7 +3,7 @@ export interface Member {
   joinedAt: string
   user: string
   avatar: string
-  acs: string
+  acs: number
   tier: string
 }
 
