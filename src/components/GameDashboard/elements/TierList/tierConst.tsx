@@ -23,7 +23,7 @@ import immortal1 from '../../../../../public/rank/Immortal_1_Rank.png'
 import immortal2 from '../../../../../public/rank/Immortal_2_Rank.png'
 import immortal3 from '../../../../../public/rank/Immortal_3_Rank.png'
 import radiant from '../../../../../public/rank/Radiant_Rank.png'
-import unranked from '../../../../../public/rank/Unranked.png'
+import unranked from '../../../../../public/rank/unranked.webp'
 
 const tierList = [
   {

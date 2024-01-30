@@ -15,15 +15,16 @@ export interface Game {
   members: Member[]
   roundInfo: RoundInfo
 }
+
 export interface RoundInterface {
-  allMembers: Member[]
+  allMembers?: Member[]
   teamA: Member[]
   teamB: Member[]
   avgAcsTeamA: number
   avgAcsTeamB: number
-  hasSelected: boolean
-  map: string
-  isSaved: boolean
+  hasSelected?: boolean
+  map?: string
+  isSaved?: boolean
 }
 
 export interface GamesOfGuild {

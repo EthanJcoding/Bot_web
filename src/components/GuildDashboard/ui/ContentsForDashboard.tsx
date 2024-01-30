@@ -7,6 +7,7 @@ import GameList from '../elements/GameList'
 
 import UpcomingGameCard from '../elements/UpcomingGameCard'
 import { Interfaces } from '@/utils'
+import PlayerStatInRow from '../elements/PlayerStatInRow'
 
 interface ContentsForDashboardProps {
   name: string
@@ -41,6 +42,7 @@ const ContentsForDashboard = ({
           </div>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
             <UpcomingGameCard nearestGame={nearestGame} guildId={guildId} />
+            <PlayerStatInRow />
           </div>
         </TabsContent>
 

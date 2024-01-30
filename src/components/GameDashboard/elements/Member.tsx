@@ -1,5 +1,3 @@
-'use client'
-
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import Link from 'next/link'
 import AcsInputDialog from './AcsInputDialog'

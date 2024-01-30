@@ -1,13 +1,8 @@
 import { Interfaces } from '..'
 
-interface OptimalTeamsResult {
-  teamA: Interfaces.Member[]
-  teamB: Interfaces.Member[]
-  avgAcsTeamA: number
-  avgAcsTeamB: number
-}
-
-function findOptimalTeams(players: Interfaces.Member[]): OptimalTeamsResult {
+function findOptimalTeams(
+  players: Interfaces.Member[],
+): Interfaces.RoundInterface {
   const n = players.length
   const halfN = n / 2
 
