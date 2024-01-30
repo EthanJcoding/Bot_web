@@ -52,9 +52,9 @@ const GameList = ({ gameList, guildId }: GameListProps) => {
             </Avatar>
             <div>
               <h4 className="text-xs font-semibold"> {member.user}</h4>
-              <p className="text-xs text-muted-foreground">
+              <div className="text-xs text-muted-foreground">
                 {member.gameUsername}
-              </p>
+              </div>
             </div>
           </div>
         ))}

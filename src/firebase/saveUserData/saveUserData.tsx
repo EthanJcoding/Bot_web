@@ -33,7 +33,7 @@ const saveUserData = async (
   gameId: string,
   gameUsername: string,
   tier: string,
-  acs: string,
+  acs: number,
 ) => {
   try {
     const gameRef = ref(database, `guilds/${guildId}/games/${gameId}`)
