@@ -1,4 +1,4 @@
-import { Interfaces } from '@/utils'
+import { Interfaces, getTierImage } from '@/utils'
 import {
   Card,
   CardHeader,
@@ -7,7 +7,7 @@ import {
   CardContent,
 } from '@/components/ui/card'
 import { Grip } from 'lucide-react'
-
+import Image from 'next/image'
 interface MemberColumnProps {
   team: Interfaces.Member[]
   onDrop: (
@@ -42,7 +42,7 @@ const MemberColumn = ({
         {team.map((member, idx) => (
           <div
             key={idx}
-            className="flex justify-between"
+            className="flex justify-between items-center"
             draggable
             onDragStart={(e) => onDrag(e, member)}
           >
@@ -57,7 +57,13 @@ const MemberColumn = ({
                 </p>
               </div>
             </div>
-            <p className="text-sm text-muted-foreground">{member.acs}</p>
+            <div className="flex items-center space-x-2">
+              <Image
+                src={getTierImage(member.tier)}
+                alt="tier image"
+                className="w-10 h-10"
+              />
+            </div>
           </div>
         ))}
       </CardContent>

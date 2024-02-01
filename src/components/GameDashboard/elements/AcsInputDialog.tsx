@@ -78,7 +78,7 @@ const AcsInputDialog = ({ gameUsername, edit }: AcsInputDialogProps) => {
       await saveUserData(guildId, gameId, gameUsername, tier, acs)
     } else {
       toast({
-        title: `${editedGameUsername} 은(는) 이미 존재합니다`,
+        title: `${editedGameUsername} 은(는) 이미 존재합니다.`,
       })
       setEditedGameUsername(gameUsername)
     }
@@ -101,8 +101,9 @@ const AcsInputDialog = ({ gameUsername, edit }: AcsInputDialogProps) => {
       // Update the recoil state with the new memberCards array
       setMemberCards(updatedMemberCards)
       await deleteMember(guildId, gameId, gameUsername)
-      // Additional logic after deletion (replace with your own logic)
-      console.log(memberCards)
+      toast({
+        title: `${gameUsername} 님을 내전에서 제외했습니다.`,
+      })
     } else {
       // Handle case where member is not found
       console.error(`Member ${gameUsername} not found for deletion.`)
