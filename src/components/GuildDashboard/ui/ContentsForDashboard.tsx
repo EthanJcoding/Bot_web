@@ -2,7 +2,7 @@ import usePreprocess from '@/hooks/usePreprocess/usePreprocess'
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../ui/tabs'
 
-import ScheduledGames from '../elements/SchduledGames'
+// import ScheduledGames from '../elements/SchduledGames'
 import GameList from '../elements/GameList'
 
 import UpcomingGameCard from '../elements/UpcomingGameCard'
@@ -20,7 +20,7 @@ const ContentsForDashboard = ({
   games,
   guildId,
 }: ContentsForDashboardProps) => {
-  const { nearestGame, futureGames, gameList } = usePreprocess(games)
+  const { nearestGame, gameList } = usePreprocess(games)
 
   return (
     <div className="flex-1 space-y-4 p-8 pt-6 min-h-[752px]">
@@ -37,9 +37,9 @@ const ContentsForDashboard = ({
         </TabsList>
 
         <TabsContent value="main" className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {/* <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             <ScheduledGames futureGamesNumber={futureGames.length} />
-          </div>
+          </div> */}
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
             <UpcomingGameCard nearestGame={nearestGame} guildId={guildId} />
             <PlayerStatInRow />

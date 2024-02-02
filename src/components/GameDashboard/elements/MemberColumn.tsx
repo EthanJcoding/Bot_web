@@ -42,11 +42,11 @@ const MemberColumn = ({
         {team.map((member, idx) => (
           <div
             key={idx}
-            className="flex justify-between items-center"
+            className="flex justify-between items-center p-1"
             draggable
             onDragStart={(e) => onDrag(e, member)}
           >
-            <div className="flex">
+            <div className="flex items-center">
               <Grip className="h-4 w-4 text-muted-foreground mr-2" />
               <div>
                 <p className="text-sm font-medium leading-none">
