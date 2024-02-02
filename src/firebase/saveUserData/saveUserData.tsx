@@ -1,12 +1,15 @@
 // firestore version
-// import { firestore } from '@/firebase/config'
+import { database } from '@/firebase/config'
 // import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore'
+import { get, ref, update } from 'firebase/database'
 
-// const saveUserData = async (
+import { Interfaces } from '@/utils'
+
+// const saveUserDataFirestore = async (
 //   guildId: string,
 //   gameUsername: string,
 //   tier: string,
-//   acs: string,
+//   acs: number,
 // ) => {
 //   try {
 //     const userRef = doc(firestore, `guilds/${guildId}/users/${gameUsername}`)
@@ -21,12 +24,6 @@
 //     console.log(error)
 //   }
 // }
-
-// export default saveUserData
-
-import { get, ref, update } from 'firebase/database'
-import { database } from '@/firebase/config'
-import { Interfaces } from '@/utils'
 
 const saveUserData = async (
   guildId: string,
@@ -57,4 +54,4 @@ const saveUserData = async (
   }
 }
 
-export default saveUserData
+export { saveUserData }

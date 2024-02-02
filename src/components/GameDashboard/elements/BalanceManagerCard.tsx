@@ -18,7 +18,7 @@ const BalanceManagerCard = ({ isLoading }: BalanceManagerCardProps) => {
       <CardHeader>
         <CardTitle>팀빌딩 매니저</CardTitle>
         <CardDescription>
-          acs를 기반으로 자동으로 팀을 짜봤어요 🤔
+          티어와 acs를 기반으로 자동으로 팀을 짜봤어요 🤔
         </CardDescription>
       </CardHeader>
       {isLoading ? (

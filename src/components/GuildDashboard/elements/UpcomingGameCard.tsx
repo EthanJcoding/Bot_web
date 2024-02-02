@@ -8,9 +8,10 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { Interfaces } from '@/utils'
+import { Interfaces, getTierImage } from '@/utils'
 import dayjs from 'dayjs'
 import Link from 'next/link'
+import Image from 'next/image'
 
 interface UpcomingGameCardProps {
   nearestGame: Interfaces.Game | null
@@ -43,26 +44,35 @@ const UpcomingGameCard = ({ nearestGame, guildId }: UpcomingGameCardProps) => {
                     key={idx}
                     className="flex justify-between items-center w-full"
                   >
-                    <div className="flex items-center">
-                      <Avatar className="h-9 w-9">
-                        <AvatarImage src={member.avatar} alt="Avatar" />
-                      </Avatar>
-                      <Link
-                        href={`https://dak.gg/valorant/profile/${member.gameUsername.replace(
-                          '#',
-                          '-',
-                        )}`}
-                        target="blank"
-                        rel="noopener noreferrer"
-                        className="ml-4 hover:bg-accent transition-colors p-4 rounded-xl space-y-2"
-                      >
-                        <p className="text-sm font-medium leading-none">
-                          {member.user}
-                        </p>
-                        <p className="text-sm text-muted-foreground">
-                          {member.gameUsername}
-                        </p>
-                      </Link>
+                    <div className="flex items-center justify-between w-full">
+                      <div className="flex items-center">
+                        <Avatar className="h-10 w-10">
+                          <AvatarImage src={member.avatar} alt="Avatar" />
+                        </Avatar>
+                        <Link
+                          href={`https://dak.gg/valorant/profile/${member.gameUsername.replace(
+                            '#',
+                            '-',
+                          )}`}
+                          target="blank"
+                          rel="noopener noreferrer"
+                          className="ml-4 hover:bg-accent transition-colors p-4 rounded-xl space-y-2"
+                        >
+                          <p className="text-sm font-medium leading-none">
+                            {member.user}
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            {member.gameUsername}
+                          </p>
+                        </Link>
+                      </div>
+                      <div>
+                        <Image
+                          src={getTierImage(member.tier)}
+                          alt="tier image"
+                          className="w-10 h-10"
+                        />
+                      </div>
                     </div>
                   </div>
                 )
