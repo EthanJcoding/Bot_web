@@ -1,4 +1,3 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import dayjs from 'dayjs'
 import {
   HoverCard,
@@ -7,9 +6,20 @@ import {
 } from '@/components/ui/hover-card'
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Interfaces } from '@/utils'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+
 interface GameListProps {
   gameList: Interfaces.Game[]
   guildId: string
+}
+
+const renderGameStatusBadge = (game: Interfaces.Game) => {
+  if (game.isActive) {
+    return <Badge variant="default">진행중</Badge>
+  } else {
+    return <Badge variant="secondary">완료!</Badge>
+  }
 }
 
 const GameList = ({ gameList, guildId }: GameListProps) => {
@@ -18,8 +28,9 @@ const GameList = ({ gameList, guildId }: GameListProps) => {
       <HoverCardTrigger href={`/guilds/${guildId}/games/${game.gameId}`}>
         <Card className="hover:bg-accent transition-colors">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              {game.createdBy}님의 내전
+            <CardTitle className="text-sm font-medium flex space-x-2">
+              <div>{`${game.createdBy}님의 내전`}</div>
+              {renderGameStatusBadge(game)}
             </CardTitle>
             <svg
               xmlns="http://www.w3.org/2000/svg"
