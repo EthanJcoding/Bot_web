@@ -14,7 +14,7 @@ function usePreprocess(games: Interfaces.GamesOfGuild) {
   const allParticipants = []
   const gamesSchedule = []
 
-  let nearestGame = null
+  let nearestGame: null | Interfaces.Game = null
   let nearestGameDate = null
 
   for (const gameId in games) {
