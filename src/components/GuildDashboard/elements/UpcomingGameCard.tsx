@@ -40,39 +40,41 @@ const UpcomingGameCard = ({ nearestGame, guildId }: UpcomingGameCardProps) => {
             <div className="flex flex-col ">
               {nearestGame.members.map((member, idx) => {
                 return (
-                  <div
-                    key={idx}
-                    className="flex justify-between items-center w-full"
-                  >
-                    <div className="flex items-center justify-between w-full">
-                      <div className="flex items-center">
-                        <Avatar className="h-10 w-10">
-                          <AvatarImage src={member.avatar} alt="Avatar" />
-                        </Avatar>
-                        <Link
-                          href={`https://dak.gg/valorant/profile/${member.gameUsername.replace(
-                            '#',
-                            '-',
-                          )}`}
-                          target="blank"
-                          rel="noopener noreferrer"
-                          className="ml-4 hover:bg-accent transition-colors p-4 rounded-xl space-y-2"
-                        >
-                          <p className="text-sm font-medium leading-none">
-                            {member.user}
-                          </p>
-                          <p className="text-sm text-muted-foreground">
-                            {member.gameUsername}
-                          </p>
-                        </Link>
-                      </div>
-                      <div>
-                        <Image
-                          src={getTierImage(member.tier)}
-                          alt="tier image"
-                          className="w-10 h-10"
-                        />
-                      </div>
+                  <div key={idx} className="flex justify-between items-center">
+                    <div className="flex items-center w-full">
+                      <Avatar className="h-10 w-10">
+                        <AvatarImage src={member.avatar} alt="Avatar" />
+                      </Avatar>
+                      <Link
+                        href={`https://dak.gg/valorant/profile/${member.gameUsername.replace(
+                          '#',
+                          '-',
+                        )}`}
+                        target="blank"
+                        rel="noopener noreferrer"
+                        className="ml-4 hover:bg-accent transition-colors p-4 rounded-xl space-y-2"
+                      >
+                        <p className="text-sm font-medium leading-none">
+                          {member.user}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          {member.gameUsername}
+                        </p>
+                      </Link>
+                    </div>
+                    <div className="flex items-center space-x-4 w-full justify-end">
+                      {member.acs > 0 && member.tier !== '' && (
+                        <>
+                          <Image
+                            src={getTierImage(member.tier)}
+                            alt="tier image"
+                            className="w-10 h-10"
+                          />
+                          <div className="text-sm text-muted-foreground ">
+                            {member.acs}
+                          </div>
+                        </>
+                      )}
                     </div>
                   </div>
                 )
